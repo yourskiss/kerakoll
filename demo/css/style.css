@@ -1,0 +1,192 @@
+*{margin:0;padding:0;box-sizing:border-box;line-height:1}
+html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:rgba(0,0,0,0);-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-0.25em}sup{top:-0.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,html [type=button],[type=reset],[type=submit]{-webkit-appearance:button}button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}
+
+/* ################### Loader ################### */
+.pageloader {display: none;position: fixed;left: 0;top: 0;z-index: 9;width: 100%;height: 100%;margin: 0;padding: 0;background: #000000; background: rgba(0, 0, 0, 0.7);text-align: center;}
+.pageloader div {position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);border: 16px solid #f3f3f3;border-radius: 50%;border-top: 16px solid #3498db;width: 120px;height: 120px;-webkit-animation: spin 2s linear infinite; animation: spin 2s linear infinite; }
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+body { background-color: #000; }
+main { display: flow-root; background-color: #fff; width:100%; max-width: 900px; margin: 0 auto; float: none; }
+
+header {
+  width: 100%;
+  float: left;
+  border-radius: 0;
+  background: #fff;
+  padding: 1rem;
+}
+header  h1 {
+  width: 100%;
+  float: left;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+  color: #000;
+  font-size: 24px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  letter-spacing: 1px;
+}
+
+ .maincontainer {
+  width: 100%;
+  float: left;
+  border-radius: 0;
+  background: #ddd;
+  padding: 2rem;
+  background-size: cover;
+}
+
+ .meridianForm {
+  width: 100%;
+  float: left;
+  margin-top: 1rem;
+}
+ .meridianForm .meridianField {
+  float: left;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+ .meridianForm .meridianField .mf_input {
+  float: left;
+  width: 100%;
+  padding: 0.8rem 1.5rem;
+  border: solid 2px #9fa2ad;
+  outline: none;
+  background: #fff;
+  border-radius: 5px;
+  text-align: left;
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+  color: #000;
+  font-size: 22px;
+  box-shadow: 0px 3px 5px 5px rgba(0, 0, 0, 0.3);
+}
+ .meridianForm .meridianField .mf_input::-webkit-input-placeholder {
+  color: #000;
+  text-transform: uppercase;
+  opacity: 1;
+}
+ .meridianForm .meridianField .mf_input:-ms-input-placeholder {
+  color: #000;
+  text-transform: uppercase;
+  opacity: 1;
+}
+ .meridianForm .meridianField .mf_input::placeholder {
+  color: #000;
+  text-transform: uppercase;
+  opacity: 1;
+}
+ .meridianForm .meridianField .mf_error {
+  display: none;
+  margin-top: 0.7rem;
+  float: left;
+  width: 100%;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+  color: #f30;
+  font-size: 16px;
+}
+ .meridianForm .meridianField.mf100 {
+  width: 100%;
+}
+ .meridianForm .meridianField.mf50 {
+  width: 48%;
+}
+ .meridianForm .meridianField.mf50_right {
+  width: 48%;
+  float: right;
+}
+ .meridianForm .meridianField.mf25 {
+  width: 50%;
+  margin-left: 25%;
+  margin-bottom: 1rem;
+}
+ .meridianForm .meridianField.mf75 {
+  width: 75%;
+  margin: 1rem 12.5%;
+}
+ .meridianForm .meridianField.mf33 {
+  width: 50%;
+  margin: 2rem 25%;
+}
+ .meridianForm h2 {
+  width: 100%;
+  float: left;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+  color: #000;
+  font-size: 24px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  letter-spacing: 1px;
+}
+ .meridianSubmit {
+  margin-top: 1.5rem;
+  float: left;
+  width: 100%;
+  text-align: center;
+}
+.meridian_button {
+  display: inline-block;
+  margin: 0 auto;
+  padding: 1rem 2.5rem;
+  text-align: center;
+  background: #000;
+  font-family:Arial, sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  color: #fff;
+  border: none;
+  box-shadow: 0px 5px 3px 3px rgba(0, 0, 0, 0.3);
+  transition: all 0.5s ease-out;
+  border-radius: 5px;
+  text-decoration: none;
+  letter-spacing: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.meridian_button:hover {
+  background: #fff;
+  color: #000000;
+  transition: all 0.5s ease-in;
+}
+.meridian_button.disabled {
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.meridianForm p {
+  margin-top: 1.5rem;
+  width: 100%;
+  float: left;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  letter-spacing: 4px;
+}
+.meridianForm p a {
+  display: inline-block;
+  text-decoration: underline;
+  color: #ffffff;
+  transition: all 0.5s ease-out;
+}
+.meridianForm p a:hover {
+  text-decoration: none;
+  color: #ffffff;
+  transition: all 0.5s ease-in;
+}
