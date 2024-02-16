@@ -13,31 +13,32 @@ window.addEventListener('load', () => {
   }
 
   let installPrompt = null;
-  const installButton = document.querySelector("#install");
-  
+  const installButton = document.getElementById("pwaInstall");
   window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    installPrompt = event;
-    installButton.removeAttribute("hidden");
-  });
-
+        event.preventDefault();
+        installPrompt = event;
+        document.getElementById("pwaPrompt").style.display = "block";
+    });
   installButton.addEventListener("click", async () => {
-    if (!installPrompt) {
-      return;
-    }
-    const result = await installPrompt.prompt();
-    console.log(`Install prompt was: ${result.outcome}`);
-    installPrompt = null;
-    installButton.setAttribute("hidden", "");
-  });
-  
+        if (!installPrompt) 
+        { 
+            return; 
+        }
+        await installPrompt.prompt();
+        installPrompt = null;
+    });
+
+
+ 
+ 
+ 
   // Register the Service Worker
 //   const registerServiceWorker = async () => {
 //     if ("serviceWorker" in navigator) 
 //     {
 //       try 
 //       {
-//         const registration = await navigator.serviceWorker.register("../serviceworker.js", {
+//         const registration = await navigator.serviceWorker.register("serviceworker.js", {
 //           scope: "/",
 //         });
 //         if (registration.installing) 

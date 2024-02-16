@@ -12,6 +12,17 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+ 
+/* ################### msg-popup ################### */
+.pwaPromptPopup { display: none; z-index:99998; position: fixed; left: 0; top: 0; height: 100%; width: 100%; background-color: #000; background: rgba(0,0,0,0.6); }
+.pwaPromptPopup section { display: block; z-index:99999;  position:absolute; left:50%; top:10%; transform: translateX(-50%); width: 95%; max-width:300px; height: auto; max-height: 95%; background-color: #fff; overflow:visible; border-radius:10px; margin:0 auto; padding:2rem; box-sizing: border-box; }
+.pwaPromptPopup h2 {  width: 100%; float: left; margin:0; padding: 0; text-align: center; color:#141414; line-height: 1.2; font-size:14px; font-family: Arial, Helvetica, sans-serif; text-transform: none; } 
+.pwaPromptPopup p {  width: 100%; float: left; margin:1rem 0 0 0; padding: 0;  text-align: center;  } 
+.pwaPromptPopup p .pwaPromptButton { display: inline-block; cursor: pointer; text-decoration: none; margin: 0 5px; padding:0.5rem 1rem; border-radius: 25px; background: #fa4c0c; color:#fff; font-size:12px; line-height: 1; font-family: Arial, Helvetica, sans-serif; text-transform: uppercase; border: none; transition:all 0.5s ease-out; }
+.pwaPromptPopup p .pwaPromptButton:hover { background: #242424; color: #fff; transition:all 0.5s ease-in; }
+
+
+
 body { background-color: #000; }
 main { display: flow-root; background-color: #fff; width:100%; max-width: 900px; margin: 0 auto; float: none; }
 

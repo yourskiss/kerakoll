@@ -61,6 +61,12 @@ $(document).on('keyup keypress', 'input[type="text"], input[type="submit"]', fun
 });
  // disable enter key  === end
 
+ // Pwa Prompt  === end
+ function closePwaPrompt()
+ {
+   $("#pwaPrompt").fadeOut(300);
+ }
+ // Pwa Prompt  === end
 
 
 /* form validation === start */

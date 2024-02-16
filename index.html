@@ -65,7 +65,8 @@
         <div class="meridianSubmit">
             <input class="meridian_button" type="submit" value="REGISTER" onclick="return formValidation();" />
 
-            <button id="install" hidden>Install</button>
+            
+
         </div>
     </form>
     </div>
@@ -74,7 +75,19 @@
 </main>
 <!-- main start -->
 
- 
+
+
+<!-- pwa Prompt  start -->
+<div class="pwaPromptPopup" id="pwaPrompt">
+    <section>
+        <h2>Install PWA</h2>
+        <p>
+            <span id="pwaInstall" class="pwaPromptButton" onclick="closePwaPrompt();">Install</span>
+            <span id="pwaCancel" class="pwaPromptButton" onclick="closePwaPrompt();">cancel</span>
+        </p>
+    </section>
+</div>
+<!-- pwa Prompt start -->
 
 <!-- loader start -->
 <div class="pageloader">
