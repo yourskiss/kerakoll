@@ -145,6 +145,7 @@ function registerValidation()
 {
     // debugger;
     let emailReg = new RegExp('[a-z0-9._-]+@[a-z0-9]+\.[a-z]{2,7}');
+    let adhaarRegex = new RegExp(/^[2-9]{1}[0-9]{11}$/);
     $(".mf_error").hide().html('');
     if($("#firstname").val() == '')
     {
@@ -163,7 +164,7 @@ function registerValidation()
     }
     else if ($("#mobilenumber").val().length !== 10) 
     {
-        $("#error_mobilenumber").show().html('Please enter valid mobile number');
+        $("#error_mobilenumber").show().html('Please enter 10 digit mobile number');
         return false;
     }
     else if (($("#mobilenumber").val().indexOf('9')) != 0 && ($("#mobilenumber").val().indexOf('8')) != 0 && ($("#mobilenumber").val().indexOf('7')) != 0 && ($("#mobilenumber").val().indexOf('6')) != 0) 
@@ -176,7 +177,8 @@ function registerValidation()
         $("#error_emailid").show().html('Please enter your email address');
         return false;
     }
-    else if (!emailReg.test($("#emailid").val())) {
+    else if (!emailReg.test($("#emailid").val())) 
+    {
         $("#error_emailid").show().html('Please enter valid email address');
         return false;
     }
@@ -187,9 +189,15 @@ function registerValidation()
     }
     else if ($("#adhaarnumber").val().length !== 12) 
     {
+        $("#error_adhaarnumber").show().html('Please enter 12 digit adhaar number');
+        return false;
+    }
+    else if (!adhaarRegex.test($("#adhaarnumber").val())) 
+    {
         $("#error_adhaarnumber").show().html('Please enter valid adhaar number');
         return false;
     }
+    
     else 
     {
             $(".mf_error").hide().html('');
