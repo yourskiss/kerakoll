@@ -19,11 +19,22 @@ const assets = [
 
 self.addEventListener("install", installEvent => {
   installEvent.waitUntil(
-    caches.open(staticKerakoll).then(cache => {
-      cache.addAll(assets)
-    })
+    caches.open(staticKerakoll)
+    .then(cache => { cache.addAll(assets); })
+    .catch(err => { console.log(err); })
   )
 })
+
+self.addEventListener("fetch", event => {
+  console.log('test');
+  event.respondWith(fetch(event.request).catch(err => caches.match(event.request).then(response => response)));
+});
+
+ 
+
+
+ 
+ 
 
 // self.addEventListener("install", (e) => {
 //   e.waitUntil(
