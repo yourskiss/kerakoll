@@ -95,7 +95,7 @@
                 </div>
             </section>
         </div>
-        <div class="registercontainer" id="registerOtp" style="display: none;">
+        <!-- <div class="registercontainer" id="registerOtp" style="display: none;">
             <section>
                 <h4>OTP Sant to your mobile number</h4>
                 <div class="registerField mf25">
@@ -104,7 +104,7 @@
                 </div>
                 <p>Not reveived?  <span>Resend OTP</span></p>
             </section>
-        </div>
+        </div> -->
         <div class="registerSubmit">
             <span class="register_button" onclick="return registerValidation();">REGISTER</span>
         </div>
@@ -113,13 +113,26 @@
     <!-- registerScreen end -->
 
 
+ 
 
+    <!-- thanksScreen start -->
+    <div class="screen" id="registerthankScreen"> 
+        <div class="registerHead">Registration Successful.</div>
+        <div class="registercontainer">
+            <section>
+                <h3>Entra nel mondo Kerakoll Entra nel mondo Kerakoll Entra nel mondo Kerakoll</h3>
+            </section>
+        </div>
+        <div class="registerText">Click here to <span onclick="showScreens('login');">LOGIN</span></div>
+    </div>
+    <!-- thanksScreen end -->
 
 
 
     <!-- dashboard start -->
     <div class="screen" id="dashboardScreen"> 
         <h1>Dashboard</h1>
+        <ul id="datacontainer"></ul>
     </div>
     <!-- dashboard end -->
 

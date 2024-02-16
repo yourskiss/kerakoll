@@ -102,6 +102,31 @@ function showScreens(val)
     {
         $("#loginScreen").slideDown(300);
     }
+    else if(screenLS == 'dashboard')
+    {
+        $("#dashboardScreen").slideDown(300);
+        $("#pageloader").fadeIn(300);
+        
+
+        fetch('https://jsonplaceholder.typicode.com/users', {
+            method: 'GET',
+            headers: {'content-type':'application/json'},
+        })
+        .then(res => { return res.json(); })
+        .then(data => {  
+            var dataoutput = '';
+            for (var i = 0; i < data.length; i++) 
+            {
+                dataoutput += `<li><h2>${data[i].name}</h2><p>${data[i].phone} ||  ${data[i].email}</p></li>`;  
+            }
+            $('#datacontainer').html(dataoutput);  
+        })
+        .catch(error => {
+            console.log(error)
+        });
+
+        setTimeout(function() {  $("#pageloader").fadeOut(300); }, 1000);
+    }
     else
     {
         $('.screen').slideUp(300);
@@ -167,23 +192,8 @@ function registerValidation()
     }
     else 
     {
-        $("#registerForm").slideUp(300);
-        $("#registerOtp").slideDown(300);
-        if($("#OtpRegister").val() == '')
-        {
-            $("#error_OtpRegister").show().html('Please enter OTP');
-            return false;
-        }
-        else if ($("#OtpRegister").val().length !== 6) 
-        {
-            $("#error_OtpRegister").show().html('Please enter valid OTP');
-            return false;
-        }
-        else 
-        {
             $(".mf_error").hide().html('');
             $("#pageloader").fadeIn(300);
-            showScreens('dashboard');
             
             const userlist = {
                 first_Name: $("#firstname").val(),
@@ -193,47 +203,28 @@ function registerValidation()
                 aadhaar_Info: $("#adhaarnumber").val()
             };
             console.log(userlist);
-
             const headers = { 
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "POST",
-                "accept" : "text/plain", 
-                "contentType" : "application/json" ,
-                "Access-Control-Allow-Headers": "Content-Type"
             };
-            console.log(headers);
-            
-            fetch('http://20.197.32.117:3035/api/Customer/SaveUser', {
-                method: 'POST',
-                headers  : headers,
-                body: JSON.stringify(userlist)
-            }).then(res => {
-                return res.json();
-            }).then(task => {
-                console.log(task);
-            }).catch(error => {
-                console.log(error, " error test");
-            });
-            
-            /*
+
                 $.ajax({
-                    url: "http://20.197.32.117:3035/api/Customer/SaveUser", 
+                    url: "https://jsonplaceholder.typicode.com/posts", 
                     type: "POST",
                     dataType: "json",
                     headers  : headers,
-                    data: userlist,
+                    data: JSON.stringify(userlist),
                     success: function (result) {
                         console.log(result);
+                        showScreens('registerthank');
                     },
                     error: function (err) {
                         console.log(err);
                     }
               });
-            */
+            
 
             $("#pageloader").fadeOut(300);
             return true;
-        }
     }
 }
 // registerValidation === end 
@@ -289,7 +280,9 @@ function loginValidation()
 }
 // loginValidation === end 
 
- 
+
+
+
 
 
 
