@@ -46,160 +46,39 @@ header  h1 {
   letter-spacing: 1px;
 }
 
- .maincontainer {
-  width: 100%;
-  float: left;
-  border-radius: 0;
-  background: #ddd;
-  padding: 2rem;
-  background-size: cover;
-}
 
- .meridianForm {
-  width: 100%;
-  float: left;
-  margin-top: 1rem;
-}
- .meridianForm .meridianField {
-  float: left;
-  text-align: center;
-  margin-top: 1.5rem;
-}
- .meridianForm .meridianField .mf_input {
-  float: left;
-  width: 100%;
-  padding: 0.8rem 1.5rem;
-  border: solid 2px #9fa2ad;
-  outline: none;
-  background: #fff;
-  border-radius: 5px;
-  text-align: left;
-  font-family: Arial, sans-serif;
-  font-weight: 500;
-  color: #000;
-  font-size: 22px;
-  box-shadow: 0px 3px 5px 5px rgba(0, 0, 0, 0.3);
-}
- .meridianForm .meridianField .mf_input::-webkit-input-placeholder {
-  color: #000;
-  text-transform: uppercase;
-  opacity: 1;
-}
- .meridianForm .meridianField .mf_input:-ms-input-placeholder {
-  color: #000;
-  text-transform: uppercase;
-  opacity: 1;
-}
- .meridianForm .meridianField .mf_input::placeholder {
-  color: #000;
-  text-transform: uppercase;
-  opacity: 1;
-}
- .meridianForm .meridianField .mf_error {
-  display: none;
-  margin-top: 0.7rem;
-  float: left;
-  width: 100%;
-  text-align: center;
-  font-family: Arial, sans-serif;
-  font-weight: 500;
-  color: #f30;
-  font-size: 16px;
-}
- .meridianForm .meridianField.mf100 {
-  width: 100%;
-}
- .meridianForm .meridianField.mf50 {
-  width: 48%;
-}
- .meridianForm .meridianField.mf50_right {
-  width: 48%;
-  float: right;
-}
- .meridianForm .meridianField.mf25 {
-  width: 50%;
-  margin-left: 25%;
-  margin-bottom: 1rem;
-}
- .meridianForm .meridianField.mf75 {
-  width: 75%;
-  margin: 1rem 12.5%;
-}
- .meridianForm .meridianField.mf33 {
-  width: 50%;
-  margin: 2rem 25%;
-}
- .meridianForm h2 {
-  width: 100%;
-  float: left;
-  text-align: center;
-  text-transform: uppercase;
-  font-family: Arial, sans-serif;
-  font-weight: 500;
-  color: #000;
-  font-size: 24px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-  letter-spacing: 1px;
-}
- .meridianSubmit {
-  margin-top: 1.5rem;
-  float: left;
-  width: 100%;
-  text-align: center;
-}
-.meridian_button {
-  display: inline-block;
-  margin: 0 auto;
-  padding: 1rem 2.5rem;
-  text-align: center;
-  background: #000;
-  font-family:Arial, sans-serif;
-  font-weight: 700;
-  font-size: 30px;
-  color: #fff;
-  border: none;
-  box-shadow: 0px 5px 3px 3px rgba(0, 0, 0, 0.3);
-  transition: all 0.5s ease-out;
-  border-radius: 5px;
-  text-decoration: none;
-  letter-spacing: 5px;
-  cursor: pointer;
-  text-transform: uppercase;
-}
-.meridian_button:hover {
-  background: #fff;
-  color: #000000;
-  transition: all 0.5s ease-in;
-}
-.meridian_button.disabled {
-  user-select: none;
-  pointer-events: none;
-  opacity: 0.4;
-}
 
-.meridianForm p {
-  margin-top: 1.5rem;
-  width: 100%;
-  float: left;
-  text-align: center;
-  text-transform: uppercase;
-  font-family: Arial, sans-serif;
-  font-weight: 500;
-  color: #ffffff;
-  font-size: 20px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-  letter-spacing: 4px;
-}
-.meridianForm p a {
-  display: inline-block;
-  text-decoration: underline;
-  color: #ffffff;
-  transition: all 0.5s ease-out;
-}
-.meridianForm p a:hover {
-  text-decoration: none;
-  color: #ffffff;
-  transition: all 0.5s ease-in;
-}
 
+/* register container */
+.screen { display: none; width: 100%; float: left; border-radius: 0; background: #ddd; padding: 2rem; }
+
+.registerHead { width: 100%; float: left;text-align: center; text-transform: uppercase; font-family: Arial, sans-serif; font-weight: 500; color: #000; font-size: 18px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);  }
+.registerText { margin-top: 1.5rem; width: 100%; float: left; text-align: center; text-transform: none; font-family:Arial,sans-serif;font-weight: 500;color: #000; font-size: 16px; }
+.registerText span { display: inline-block; text-decoration:underline; cursor: pointer; color: #000; transition: all 0.5s ease-out;  }
+.registerText span:hover {   color: #f30;  transition: all 0.5s ease-in;  }
+.registercontainer { width: 100%; float: left; margin-top: 1rem; }
+.registercontainer section { margin: 0; padding: 0; width: 100%; float: left;   display: flex; justify-content: space-between; align-items: flex-start;flex-wrap: wrap; }
+.registercontainer h3, .registercontainer h4 { width: 100%;float: left;text-align: center;text-transform: none;font-family: Arial, sans-serif;font-weight: 500; color: #000;font-size: 16px;  margin-top:0.5rem; }
+.registercontainer h4 { color: #1c931b; }
+.registercontainer p { margin-top:0.5rem; width: 100%; float: left; text-align: center; text-transform: none; font-family:Arial,sans-serif;font-weight: 500;color: #000; font-size: 14px; }
+.registercontainer p span { display: inline-block; text-decoration:underline; cursor: pointer; color: #000; transition: all 0.5s ease-out;  }
+.registercontainer p span:hover {   color: #f30;  transition: all 0.5s ease-in;  }
+.registerField {float: left;text-align: center; margin-top: 1.5rem;}
+.mf_input {  float: left;  width: 100%;  padding: 0.7rem 1rem;  border: 0;  outline: none;  background: #fff;  border-radius: 5px;  text-align: left;  font-family: Arial, sans-serif;  font-weight: 500;  color: #000;  font-size: 16px;  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.3); }
+.mf_input::-webkit-input-placeholder { color: #000; opacity: 1;}
+.mf_input:-ms-input-placeholder{ color: #000; opacity: 1;}
+.mf_input::placeholder { color: #000;  opacity: 1;}
+.mf_error { display: none; margin-top: 0.7rem; float: left; width: 100%; text-align: center;font-family: Arial, sans-serif; font-weight: 500; color: #f30; font-size: 14px;}
+.registerField.mf100 { width: 100%;}
+.registerField.mf50 {  width: 48%;}
+.registerField.mf50_right {  width: 48%;  float: right;}
+.registerField.mf25 {  width: 50%;  margin-left: 25%;  margin-bottom: 1rem;}
+ .registerField.mf75 {  width: 75%;  margin: 1rem 12.5%;}
+.registerField.mf33 {  width: 50%;  margin: 2rem 25%;}
+ .registerSubmit {  margin-top: 1.5rem;  float: left;  width: 100%;  text-align: center;}
+.register_button {  display: inline-block;  margin: 0 auto;  padding:0.8rem 1.5rem;  text-align: center;  background: #000;  font-family:Arial, sans-serif;  font-weight: 700;  font-size: 16px;  color: #fff;  border: none;  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.3);  transition: all 0.5s ease-out;  border-radius: 5px;  text-decoration: none;   cursor: pointer;  text-transform: uppercase; }
+.register_button:hover { background: #fff;  color: #000000;  transition: all 0.5s ease-in; }
+.register_button.disabled { user-select: none;  pointer-events: none;  opacity: 0.4; }
+
+ 
  

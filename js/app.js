@@ -64,23 +64,53 @@ $(document).on('keyup keypress', 'input[type="text"], input[type="submit"]', fun
  // Pwa Prompt  === end
  function closePwaPrompt()
  {
-   $("#pwaPrompt").fadeOut(300);
+    $("#pwaPrompt").fadeOut(300);
  }
  // Pwa Prompt  === end
+ 
 
 
-/* form validation === start */
-function formValidation()
+ /* change screen === end */
+function showScreens(val)
+{
+    $('.screen').slideUp(300);
+    if(val == 'login')
+    {
+        $("#loginScreen").slideDown(300);
+    }
+    else if(val == 'register')
+    {
+        $("#registerScreen").slideDown(300);
+    }
+    else if(val == 'dashboard')
+    {
+        $("#dashboardScreen").slideDown(300);
+    }
+    else
+    {
+        alert(' error ');
+    }
+}
+/* change screen === end */
+
+
+
+/* registerValidation === start */
+function registerValidation()
 {
     // debugger;
     let emailReg = new RegExp('[a-z0-9._-]+@[a-z0-9]+\.[a-z]{2,7}');
     $(".mf_error").hide().html('');
-    if($("#fullname").val() == '')
+    if($("#firstname").val() == '')
     {
-        $("#error_fullname").show().html('Please enter your name');
+        $("#error_firstname").show().html('Please enter your first name');
         return false;
     }
-    
+    else if($("#lastname").val() == '')
+    {
+        $("#error_lastname").show().html('Please enter your last name');
+        return false;
+    }
     else if($("#mobilenumber").val() == '')
     {
         $("#error_mobilenumber").show().html('Please enter your mobile number');
@@ -117,94 +147,123 @@ function formValidation()
     }
     else 
     {
-        $("#registerscreen").slideUp(200);
-        $("#OtpNumberScreen").slideDown(200);
-        if($("#OtpNumber").val() == '')
+        $("#registerForm").slideUp(300);
+        $("#registerOtp").slideDown(300);
+        if($("#OtpRegister").val() == '')
         {
-            $("#error_OtpNumber").show().html('Please enter OTP');
+            $("#error_OtpRegister").show().html('Please enter OTP');
             return false;
         }
-        else if ($("#OtpNumber").val().length !== 6) 
+        else if ($("#OtpRegister").val().length !== 6) 
         {
-            $("#error_OtpNumber").show().html('Please enter valid OTP');
+            $("#error_OtpRegister").show().html('Please enter valid OTP');
             return false;
         }
         else 
         {
             $(".mf_error").hide().html('');
+            $("#registerScreen").slideUp(300);
+            $("#dashboardScreen").slideDown(300);
+            $("#pageloader").fadeIn(300);
+
+            const userlist = {
+                first_Name: $("#firstname").val(),
+                last_Name: $("#lastname").val(),
+                phone_Number: $("#mobilenumber").val(),
+                email_Address: $("#emailid").val(),
+                aadhaar_Info: $("#adhaarnumber").val()
+            };
+            console.log(userlist);
+
+            const headers = { 
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST",
+                "accept" : "text/plain", 
+                "contentType" : "application/json" ,
+                "Access-Control-Allow-Headers": "Content-Type"
+            };
+            console.log(headers);
+            
+            fetch('http://20.197.32.117:3035/api/Customer/SaveUser', {
+                method: 'POST',
+                headers  : headers,
+                body: JSON.stringify(userlist)
+            }).then(res => {
+                return res.json();
+            }).then(task => {
+                console.log(task);
+            }).catch(error => {
+                console.log(error, " error test");
+            });
+            
+/*
+            $.ajax({
+                url: "http://20.197.32.117:3035/api/Customer/SaveUser", 
+                type: "POST",
+                dataType: "json",
+                headers  : headers,
+                data: userlist,
+                success: function (result) {
+                    console.log(result);
+                 },
+                 error: function (err) {
+                    console.log(err);
+                 }
+              });
+*/
+            $("#pageloader").fadeOut(300);
             return true;
         }
     }
 }
-/* form validation === end */
+/* registerValidation === end */
+ 
 
 
-/* otpValidation === start */
-function otpValidation()
+/* loginValidation === start */
+function loginValidation()
 {
     // debugger;
     $(".mf_error").hide().html('');
-    if($("#phonenumber").val() == '')
+    if($("#mobileLogin").val() == '')
     {
-        $("#error_phonenumber").show().html('Please enter mobile number');
+        $("#error_mobileLogin").show().html('Please enter mobile number');
         return false;
     }
-    else if($("#phonenumber").val().length != 10)
+    else if($("#mobileLogin").val().length != 10)
     {
-        $("#error_phonenumber").show().html('Please enter valid mobile number');
+        $("#error_mobileLogin").show().html('Please enter valid mobile number');
         return false;
     }
-    else if (($("#phonenumber").val().indexOf('9')) != 0 && ($("#phonenumber").val().indexOf('8')) != 0 && ($("#phonenumber").val().indexOf('7')) != 0 && ($("#phonenumber").val().indexOf('6')) != 0) 
+    else if (($("#mobileLogin").val().indexOf('9')) != 0 && ($("#mobileLogin").val().indexOf('8')) != 0 && ($("#mobileLogin").val().indexOf('7')) != 0 && ($("#mobileLogin").val().indexOf('6')) != 0) 
     {
-        $("#error_phonenumber").show().html('Mobile number start with digits like 9, 8, 7, 6');
+        $("#error_mobileLogin").show().html('Mobile number start with digits like 9, 8, 7, 6');
         return false;
     }
     else 
-    {
-        $("#loginscreen").slideUp(200);
-        $("#otpscreen").slideDown(200);
-        if($("#OtpID").val() == '')
+    { 
+        $("#loginForm").slideUp(200);
+        $("#loginOtp").slideDown(200);
+        if($("#OtpLogin").val() == '')
         {
-            $("#error_OtpID").show().html('Please enter OTP');
+            $("#error_OtpLogin").show().html('Please enter OTP');
             return false;
         }
-        else if ($("#OtpID").val().length !== 6) 
+        else if ($("#OtpLogin").val().length !== 6) 
         {
-            $("#error_OtpID").show().html('Please enter valid OTP');
+            $("#error_OtpLogin").show().html('Please enter valid OTP');
             return false;
         }
         else 
         {
             $(".mf_error").hide().html('');
+            $("#loginScreen").slideUp(300);
+            $("#dashboardScreen").slideDown(300);
             return true;
         }
     }
-    
 }
-/* otpValidation === end */
+/* loginValidation === end */
 
  
 
-
-/* showHideWrongMsg  === start */
-function showHideWrongMsg(val)
-{
-    if(val == 'show')
-    {
-        $("#somethingwentwrong").fadeIn(300);
-    }
-    else if(val == 'hide')
-    {
-        $("#somethingwentwrong").fadeOut(300);
-        $("#quiczAnswerKey li").removeClass('active');
-    }
-    else 
-    {
-        // nothing
-    }
-}
-/* showHideWrongMsg === end */
-
-
- 
-/* winner slider ===== end  */
