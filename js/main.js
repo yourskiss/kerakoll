@@ -17,7 +17,8 @@ window.addEventListener('load', () => {
   window.addEventListener("beforeinstallprompt", (event) => {
         event.preventDefault();
         installPrompt = event;
-        document.getElementById("pwaPrompt").style.display = "block";
+        showPwaPrompt();
+        // document.getElementById("pwaPrompt").style.display = "block";
     });
   installButton.addEventListener("click", async () => {
         if (!installPrompt) 

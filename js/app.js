@@ -1,20 +1,14 @@
-/* page refresh on orientation change === START */
+// page refresh on orientation change === START 
 $(window).on('orientationchange', function () 
 {
     location.reload(true);
 });
-/* page refresh on orientation change === END */
+// page refresh on orientation change === END 
 
  
 // only number validation === start
 function isNumber(e) 
 {
-    // evt = (evt) ? evt : window.event;
-    // var charCode = (evt.which) ? evt.which : evt.keyCode;
-    // if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-    //     return false;
-    // }
-    // return true;
     var regex = new RegExp("^[0-9]+$");
     var strigChar = String.fromCharCode(!e.charCode ? e.which : e.charCode);
     if (regex.test(strigChar)) {
@@ -61,41 +55,67 @@ $(document).on('keyup keypress', 'input[type="text"], input[type="submit"]', fun
 });
  // disable enter key  === end
 
- // Pwa Prompt  === end
+
+ 
+ var screenLS = localStorage.getItem('screen'); // selected screen
+
+
+ // show Prompt  === start
+ function showPwaPrompt()
+ {
+    // debugger;
+    if(screenLS == 'login' || screenLS == 'register' || screenLS == null)
+    {
+        $("#pwaPrompt").fadeIn(300);
+    }
+ }
+// show Prompt  === end
+
+ // close Prompt  === start
  function closePwaPrompt()
  {
     $("#pwaPrompt").fadeOut(300);
  }
- // Pwa Prompt  === end
+ // close Prompt  === end
  
 
 
- /* change screen === end */
+// change screen === start 
 function showScreens(val)
 {
+    // debugger;
+    localStorage.setItem('screen', val);
     $('.screen').slideUp(300);
-    if(val == 'login')
+    $("#"+val+"Screen").slideDown(300);
+}
+// change screen === end 
+
+
+
+
+
+// set screen === start 
+ function setScreens()
+ {
+    // debugger;
+    if(screenLS == null)
     {
         $("#loginScreen").slideDown(300);
     }
-    else if(val == 'register')
-    {
-        $("#registerScreen").slideDown(300);
-    }
-    else if(val == 'dashboard')
-    {
-        $("#dashboardScreen").slideDown(300);
-    }
     else
     {
-        alert(' error ');
+        $('.screen').slideUp(300);
+        $("#"+screenLS+"Screen").slideDown(300);
     }
-}
-/* change screen === end */
+ }
+ setScreens();
+// set screen === end 
 
 
 
-/* registerValidation === start */
+
+
+// registerValidation === start 
 function registerValidation()
 {
     // debugger;
@@ -162,10 +182,9 @@ function registerValidation()
         else 
         {
             $(".mf_error").hide().html('');
-            $("#registerScreen").slideUp(300);
-            $("#dashboardScreen").slideDown(300);
             $("#pageloader").fadeIn(300);
-
+            showScreens('dashboard');
+            
             const userlist = {
                 first_Name: $("#firstname").val(),
                 last_Name: $("#lastname").val(),
@@ -196,31 +215,34 @@ function registerValidation()
                 console.log(error, " error test");
             });
             
-/*
-            $.ajax({
-                url: "http://20.197.32.117:3035/api/Customer/SaveUser", 
-                type: "POST",
-                dataType: "json",
-                headers  : headers,
-                data: userlist,
-                success: function (result) {
-                    console.log(result);
-                 },
-                 error: function (err) {
-                    console.log(err);
-                 }
+            /*
+                $.ajax({
+                    url: "http://20.197.32.117:3035/api/Customer/SaveUser", 
+                    type: "POST",
+                    dataType: "json",
+                    headers  : headers,
+                    data: userlist,
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
               });
-*/
+            */
+
             $("#pageloader").fadeOut(300);
             return true;
         }
     }
 }
-/* registerValidation === end */
+// registerValidation === end 
  
 
 
-/* loginValidation === start */
+
+
+// loginValidation === start 
 function loginValidation()
 {
     // debugger;
@@ -257,13 +279,17 @@ function loginValidation()
         else 
         {
             $(".mf_error").hide().html('');
-            $("#loginScreen").slideUp(300);
-            $("#dashboardScreen").slideDown(300);
+            $("#pageloader").fadeIn(300);
+            showScreens('dashboard');
+
+            $("#pageloader").fadeOut(300);
             return true;
         }
     }
 }
-/* loginValidation === end */
+// loginValidation === end 
 
  
+
+
 
