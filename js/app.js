@@ -89,7 +89,7 @@ $(document).on('keyup keypress', 'input[type="text"], input[type="submit"]', fun
 
  
  var screenLS = localStorage.getItem('screen'); // selected screen
- var baseurl = "http://20.197.32.117:3035/api/Customer/"; // baseurl
+ var baseurl = "//20.197.32.117:3035/api/"; // baseurl
 
 
 
@@ -270,16 +270,18 @@ function loginValidation()
 // login === start 
 function getLogin()
 {
-    var useridLogin = 2;
+    var useridLogin = 1;
     var mobileLogin = $("#mobileLogin").val()
     const loginHeader = { 
         'Access-Control-Allow-Origin': '*',
-        'Accept': 'text/plain',
-        'Content-Type': 'application/json'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
+        'Access-Control-Allow-Headers': 'Content-Type, x-requested-with'
     };
     $.ajax({
         type: "GET",
-        url: baseurl+"UserInfo?userid="+useridLogin+"&phonenumber="+ mobileLogin, // "https://jsonplaceholder.typicode.com/posts/1",
+        url: baseurl+"Customer/UserInfo?userid="+useridLogin+"&phonenumber="+ mobileLogin, // "https://jsonplaceholder.typicode.com/posts/1",
         dataType: "json",
         headers  : loginHeader,
         success: function (result) {
@@ -301,6 +303,7 @@ function getLogin()
 // Register === start 
 function getRegister()
 {
+
     var userlist = {
         first_Name: $("#firstname").val(),
         last_Name: $("#lastname").val(),
@@ -320,13 +323,15 @@ function getRegister()
 
     var registerHeader = {    
         'Access-Control-Allow-Origin': '*',
-        'Accept': 'text/plain',
-        'Content-Type': 'application/json'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
+        'Access-Control-Allow-Headers': 'Content-Type, x-requested-with'
     }
 
         $.ajax({
             type: "POST",
-            url: baseurl + "SaveUser", // "https://jsonplaceholder.typicode.com/posts",
+            url: baseurl + "Customer/SaveUser", // "https://jsonplaceholder.typicode.com/posts",
             data: JSON.stringify(userlist),
             headers: registerHeader,
             dataType: "json",
@@ -341,6 +346,10 @@ function getRegister()
                 alert("Error");
             }
       });
+
+
+ 
+      
 }
 // Register === end 
 
