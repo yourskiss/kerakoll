@@ -1,6 +1,6 @@
 {
-    "name": "kerakoll",
-    "short_name": "kera",
+    "name": "Kerakoll",
+    "short_name": "Kerakoll",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#fdfdfd",

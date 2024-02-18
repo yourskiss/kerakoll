@@ -55,19 +55,49 @@ $(document).on('keyup keypress', 'input[type="text"], input[type="submit"]', fun
 });
  // disable enter key  === end
 
+    
+ // get ipAddress === start 
+    var getIpAddress = '';
+    $.getJSON("//api.ipify.org?format=json", function(data) { 
+        getIpAddress = data.ip;
+    });
+ // get ipAddress === end 
+
+
+// get osName === start 
+    var getOs = 'Unknown';
+    if (navigator.appVersion.indexOf("Win") != -1) { getOs = 'Windows' }
+    if (navigator.appVersion.indexOf("Mac") != -1) { getOs = 'Mac' }
+    if (navigator.appVersion.indexOf("X11") != -1) {  getOs = 'UNIX' }
+    if (navigator.appVersion.indexOf("Linux") != -1) { getOs = 'Linux' }
+ // get osName === end 
+
+
+// get browserName === start 
+    var getBrowser = 'Unknown';
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    userAgent.indexOf('edge') > -1 ? getBrowser = 'edge'
+      : userAgent.indexOf('edg') > -1 ? getBrowser = 'edge'
+      : userAgent.indexOf('opr') > -1 && !!window.opr ? getBrowser ='opera'
+      : userAgent.indexOf('chrome') > -1 && !!window.chrome ?  getBrowser ='chrome'
+      : userAgent.indexOf('trident') > -1 ? getBrowser = 'ie'
+      : userAgent.indexOf('firefox') > -1 ? getBrowser = 'firefox'
+      : userAgent.indexOf('safari') > -1 ? getBrowser = 'safari'
+      : getBrowser = 'other';
+ // get browserName === end 
+
 
  
  var screenLS = localStorage.getItem('screen'); // selected screen
+ var baseurl = "http://20.197.32.117:3035/api/Customer/"; // baseurl
+
 
 
  // show Prompt  === start
  function showPwaPrompt()
  {
     // debugger;
-    if(screenLS == 'login' || screenLS == 'register' || screenLS == null)
-    {
-        $("#pwaPrompt").fadeIn(300);
-    }
+    $("#pwaPrompt").fadeIn(300);
  }
 // show Prompt  === end
 
@@ -86,7 +116,7 @@ function showScreens(val)
     // debugger;
     localStorage.setItem('screen', val);
     $('.screen').slideUp(300);
-    $("#"+val+"Screen").slideDown(300);
+    $("#"+val+"_screen").slideDown(300);
 }
 // change screen === end 
 
@@ -98,39 +128,14 @@ function showScreens(val)
  function setScreens()
  {
     // debugger;
+    $('.screen').slideUp(300);
     if(screenLS == null)
     {
-        $("#loginScreen").slideDown(300);
-    }
-    else if(screenLS == 'dashboard')
-    {
-        $("#dashboardScreen").slideDown(300);
-        $("#pageloader").fadeIn(300);
-        
-
-        fetch('https://jsonplaceholder.typicode.com/users', {
-            method: 'GET',
-            headers: {'content-type':'application/json'},
-        })
-        .then(res => { return res.json(); })
-        .then(data => {  
-            var dataoutput = '';
-            for (var i = 0; i < data.length; i++) 
-            {
-                dataoutput += `<li><h2>${data[i].name}</h2><p>${data[i].phone} ||  ${data[i].email}</p></li>`;  
-            }
-            $('#datacontainer').html(dataoutput);  
-        })
-        .catch(error => {
-            console.log(error)
-        });
-
-        setTimeout(function() {  $("#pageloader").fadeOut(300); }, 1000);
+        $("#login_screen").slideDown(300);
     }
     else
     {
-        $('.screen').slideUp(300);
-        $("#"+screenLS+"Screen").slideDown(300);
+        $("#"+screenLS+"_screen").slideDown(300);
     }
  }
  setScreens();
@@ -202,35 +207,7 @@ function registerValidation()
     {
             $(".mf_error").hide().html('');
             $("#pageloader").fadeIn(300);
-            
-            const userlist = {
-                first_Name: $("#firstname").val(),
-                last_Name: $("#lastname").val(),
-                phone_Number: $("#mobilenumber").val(),
-                email_Address: $("#emailid").val(),
-                aadhaar_Info: $("#adhaarnumber").val()
-            };
-            console.log(userlist);
-            const headers = { 
-                "Access-Control-Allow-Origin": "*",
-            };
-
-                $.ajax({
-                    url: "https://jsonplaceholder.typicode.com/posts", 
-                    type: "POST",
-                    dataType: "json",
-                    headers  : headers,
-                    data: JSON.stringify(userlist),
-                    success: function (result) {
-                        console.log(result);
-                        showScreens('registerthank');
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-              });
-            
-
+            getRegister();
             $("#pageloader").fadeOut(300);
             return true;
     }
@@ -244,7 +221,7 @@ function registerValidation()
 // loginValidation === start 
 function loginValidation()
 {
-    // debugger;
+    debugger;
     $(".mf_error").hide().html('');
     if($("#mobileLogin").val() == '')
     {
@@ -279,8 +256,7 @@ function loginValidation()
         {
             $(".mf_error").hide().html('');
             $("#pageloader").fadeIn(300);
-            showScreens('dashboard');
-
+            getLogin();
             $("#pageloader").fadeOut(300);
             return true;
         }
@@ -291,6 +267,81 @@ function loginValidation()
 
 
 
+// login === start 
+function getLogin()
+{
+    var useridLogin = 2;
+    var mobileLogin = $("#mobileLogin").val()
+    const loginHeader = { 
+        'Access-Control-Allow-Origin': '*',
+        'Accept': 'text/plain',
+        'Content-Type': 'application/json'
+    };
+    $.ajax({
+        type: "GET",
+        url: baseurl+"UserInfo?userid="+useridLogin+"&phonenumber="+ mobileLogin, // "https://jsonplaceholder.typicode.com/posts/1",
+        dataType: "json",
+        headers  : loginHeader,
+        success: function (result) {
+            console.log(result);
+            alert('thanks');
+            showScreens('dashboard');
+        },
+        error: function (err) {
+            console.log(err);
+            alert('error');
+        }
+  });
+}
+// login === end 
 
+ 
+ 
+
+// Register === start 
+function getRegister()
+{
+    var userlist = {
+        first_Name: $("#firstname").val(),
+        last_Name: $("#lastname").val(),
+        full_Name: $("#firstname").val() + ' ' + $("#lastname").val(),
+        phone_Number: $("#mobilenumber").val(),
+        email_Address: $("#emailid").val(),
+        aadhaar_Info: $("#adhaarnumber").val(),
+        address_Line1: "test address",
+        language_Preference: "English",
+        location_Page: window.location.pathname,
+        iP_Address: getIpAddress,
+        oS_Details: getOs,
+        browser_Details: getBrowser
+    }
+    console.log("userlist row ===", userlist);
+    console.log("userlist json ===", JSON.stringify(userlist));
+
+    var registerHeader = {    
+        'Access-Control-Allow-Origin': '*',
+        'Accept': 'text/plain',
+        'Content-Type': 'application/json'
+    }
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "SaveUser", // "https://jsonplaceholder.typicode.com/posts",
+            data: JSON.stringify(userlist),
+            headers: registerHeader,
+            dataType: "json",
+            success: function (res) {
+                console.log("result === ", res);
+                alert("Thanks");
+                showScreens('registerthank');
+            },
+            error: function (err) 
+            {
+                console.log("Error ==== ", err);
+                alert("Error");
+            }
+      });
+}
+// Register === end 
 
 

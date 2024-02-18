@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+ 
+    
+
+    <title>test</title>
+ 
+
+    <style>
+        
+* { box-sizing: border-box;} 
+.screen { display: none; width: 100%; float: left; border-radius: 0; background: #ddd; padding: 2rem; }
+
+.registerHead { width: 100%; float: left;text-align: center; text-transform: uppercase; font-family: Arial, sans-serif; font-weight: 500; color: #000; font-size: 18px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);  }
+ 
+.registercontainer { width: 100%; float: left; margin-top: 1rem; }
+.registercontainer section { margin: 0; padding: 0; width: 100%; float: left;   display: flex; justify-content: space-between; align-items: flex-start;flex-wrap: wrap; }
+.registercontainer h3, .registercontainer h4 { width: 100%;float: left;text-align: center;text-transform: none;font-family: Arial, sans-serif;font-weight: 500; color: #000;font-size: 16px;  margin-top:0.5rem; }
+.registercontainer h4 { color: #1c931b; }
+.registercontainer p { margin-top:0.5rem; width: 100%; float: left; text-align: center; text-transform: none; font-family:Arial,sans-serif;font-weight: 500;color: #000; font-size: 14px; }
+.registercontainer p span { display: inline-block; text-decoration:underline; cursor: pointer; color: #000; transition: all 0.5s ease-out;  }
+.registercontainer p span:hover {   color: #f30;  transition: all 0.5s ease-in;  }
+.registerField { width: 100%; float: left;text-align: center; margin-top: 1.5rem;   }
+.mf_input { box-sizing: border-box; float: left;  width: 100%;  padding: 0.7rem 1rem; margin:0.5rem 0; border: 0;  outline: none;  background: #fff;  border-radius: 5px;  text-align: left;  font-family: Arial, sans-serif;  font-weight: 500;  color: #000;  font-size: 16px;  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.3); }
+ .registerSubmit {  margin-top: 1.5rem;  float: left;  width: 100%;  text-align: center;}
+.register_button {  display: inline-block;  margin: 0 auto;  padding:0.8rem 1.5rem;  text-align: center;  background: #000;  font-family:Arial, sans-serif;  font-weight: 700;  font-size: 16px;  color: #fff;  border: none;  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.3);  transition: all 0.5s ease-out;  border-radius: 5px;  text-decoration: none;   cursor: pointer;  text-transform: uppercase; }
+.register_button:hover { background: #fff;  color: #000000;  transition: all 0.5s ease-in; }
+.register_button.disabled { user-select: none;  pointer-events: none;  opacity: 0.4; }
+
+ 
+ 
+    </style>
+</head>
+<body>
+ 
+
+
+    <!-- registerScreen start -->
+    <div class="screen"  style="display: block;"> 
+        <div class="registerHead">REGISTERED</div>
+        <div class="registercontainer">
+            <section>
+                <div class="registerField mf75">
+                    <input  class="mf_input" type="text" id="firstname" placeholder="First Name:"   maxlength="20" />
+                    <input   class="mf_input" type="text" id="lastname" placeholder="Last Name:"   maxlength="20" />
+                    <input  class="mf_input" type="text" id="mobilenumber" placeholder="Mobile number:"  maxlength="10"  />
+                    <input  class="mf_input" type="text" id="emailid" placeholder="Email ID:"  maxlength="50"  />
+                    <input   class="mf_input" type="text" id="adhaarnumber" placeholder="Adhaar Number:"   maxlength="12"  />
+                </div>
+            </section>
+        </div>
+
+        <div class="registerSubmit">
+            <span class="register_button" onclick="return registerValidation();">REGISTER</span>
+        </div>
+
+    </div>
+    <!-- registerScreen end -->
+
+
+  
+ 
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    
+ // get ipAddress === start 
+ if(localStorage.getItem('ipAddress') == null)
+{
+    $.getJSON("https://api.ipify.org?format=json", function(data) { 
+        localStorage.setItem('ipAddress', data.ip);
+    });
+}
+ // get ipAddress === end 
+
+
+// get osName === start 
+if(localStorage.getItem('osName') == null)
+{
+    var getOs = 'Unknown';
+    if (navigator.appVersion.indexOf("Win") != -1) { getOs = 'Windows' }
+    if (navigator.appVersion.indexOf("Mac") != -1) { getOs = 'Mac' }
+    if (navigator.appVersion.indexOf("X11") != -1) {  getOs = 'UNIX' }
+    if (navigator.appVersion.indexOf("Linux") != -1) { getOs = 'Linux' }
+    localStorage.setItem('osName', getOs);
+}
+ // get osName === end 
+
+
+// get browserName === start 
+if(localStorage.getItem('browserName') == null)
+{
+    var getBrowser = 'Unknown';
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    const browserName = userAgent.indexOf('edge') > -1 ? getBrowser = 'edge'
+      : userAgent.indexOf('edg') > -1 ? getBrowser = 'edge'
+      : userAgent.indexOf('opr') > -1 && !!window.opr ? getBrowser ='opera'
+      : userAgent.indexOf('chrome') > -1 && !!window.chrome ?  getBrowser ='chrome'
+      : userAgent.indexOf('trident') > -1 ? getBrowser = 'ie'
+      : userAgent.indexOf('firefox') > -1 ? getBrowser = 'firefox'
+      : userAgent.indexOf('safari') > -1 ? getBrowser = 'safari'
+      : getBrowser = 'other';
+      localStorage.setItem('browserName', getBrowser);
+}
+ // get browserName === end 
+
+
+
+
+// registerValidation === start 
+function registerValidation()
+{
+    debugger;
+
+            var userlist = {
+                first_Name: $("#firstname").val(),
+                last_Name: $("#lastname").val(),
+                full_Name: $("#firstname").val() + ' ' + $("#lastname").val(),
+                phone_Number: $("#mobilenumber").val(),
+                email_Address: $("#emailid").val(),
+                aadhaar_Info: $("#adhaarnumber").val(),
+                address_Line1: "test address",
+                language_Preference: "English",
+                location_Page: window.location.pathname,
+                iP_Address: localStorage.getItem('ipAddress'),
+                oS_Details: localStorage.getItem('osName'),
+                browser_Details: localStorage.getItem('browserName')
+            }
+            console.log("userlist row ===", userlist);
+            console.log("userlist json ===", JSON.stringify(userlist));
+ 
+            var headers = {    
+                'Access-Control-Allow-Origin': '*',
+                'Accept': 'text/plain',
+                'Content-Type': 'application/json'
+            }
+ 
+ 
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "https://jsonplaceholder.typicode.com/posts", // "http://20.197.32.117:3035/api/Customer/SaveUser", 
+                    data: JSON.stringify(userlist),
+                    headers: headers,
+                    dataType: "json",
+                    success: function (res) {
+                        console.log("result === ", res);
+                        alert("Thanks");
+                    },
+                    error: function (err) 
+                    {
+                        console.log("Error ==== ", err);
+                        alert("Error");
+                    }
+              });
+}
+// registerValidation === end 
+ 
+ </script>
+
+
+
+</script>
+</body>
+</html>
