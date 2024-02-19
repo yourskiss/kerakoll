@@ -271,49 +271,31 @@ function getLogin()
     var useridLogin = 1;
     var mobileLogin = $("#mobileLogin").val()
     const loginHeader = { 
-        'Access-Control-Allow-Origin': '*',
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-       // 'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-       // 'Access-Control-Allow-Headers': 'Content-Type, x-requested-with'
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Content-Type" : "*",
+        "Access-Control-Accept" : "*",
+        "Access-Control-Allow-Methods" : "GET, POST, PUT, PATCH, POST, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "*",
+        'Accept' : 'application/json',
+        "Content-Type" : "application/json"
     };
+    console.log("header ===", loginHeader);
 
-    var settings = {
-        "url": "https://kerakollapi.zeroprompts.com/api/Customer/UserInfo?userid=1&phonenumber=8765456787654",
-        "method": "GET",
-        "timeout": 0,
-        "headers": {
-            "Access-Control-Allow-Origin" : "*",
-            "Access-Control-Content-Type" : "*",
-            "Access-Control-Accept" : "*",
-            "Access-Control-Allow-Methods" : "GET, POST, PUT, PATCH, POST, DELETE, OPTIONS",
-            "Access-Control-Allow-Headers": "*",
-            'Accept' : 'application/json',
-            "Content-Type" : "application/json",
+    $.ajax({
+        type: "GET",
+        url: baseurl+"Customer/UserInfo?userid="+useridLogin+"&phonenumber="+ mobileLogin, // "https://jsonplaceholder.typicode.com/posts/1",
+        dataType: "json",
+        headers  : loginHeader,
+        success: function (result) {
+            console.log(result);
+            alert('thanks');
+            showScreens('dashboard');
         },
-      };
-
- 
-      
-    $.ajax(settings).done(function (response) {
-        console.log(response);
+        error: function (err) {
+            console.log(err);
+            alert('error');
+        }
     });
-
-    // $.ajax({
-    //     type: "GET",
-    //     url: "https://kerakollapi.zeroprompts.com/api/Customer/UserInfo?userid=1&phonenumber=8765456787654", // baseurl+"Customer/UserInfo?userid="+useridLogin+"&phonenumber="+ mobileLogin, // "https://jsonplaceholder.typicode.com/posts/1",
-    //     dataType: "json",
-    //     headers  : loginHeader,
-    //     success: function (result) {
-    //         console.log(result);
-    //         alert('thanks');
-    //         showScreens('dashboard');
-    //     },
-    //     error: function (err) {
-    //         console.log(err);
-    //         alert('error');
-    //     }
-    // });
 }
 // login === end 
  
@@ -322,7 +304,7 @@ function getLogin()
 // Register === start 
 function getRegister()
 {
-
+    const registerURL =  baseurl + "Customer/SaveUser"; // "https://jsonplaceholder.typicode.com/posts",
     var userlist = {
         first_Name: $("#firstname").val(),
         last_Name: $("#lastname").val(),
@@ -341,62 +323,53 @@ function getRegister()
     console.log("userlist json ===", JSON.stringify(userlist));
 
     var registerHeader = {    
-        'Access-Control-Allow-Origin': '*',
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-        'Access-Control-Allow-Headers': 'Content-Type, x-requested-with'
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Content-Type" : "*",
+        "Access-Control-Accept" : "*",
+        "Access-Control-Allow-Methods" : "GET, POST, PUT, PATCH, POST, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "*",
+        'Accept' : 'application/json',
+        "Content-Type" : "application/json"
     }
+    console.log("header ===", registerHeader);
 
-    //     $.ajax({
-    //         type: "POST",
-    //         url: baseurl + "Customer/SaveUser", // "https://jsonplaceholder.typicode.com/posts",
-    //         data: JSON.stringify(userlist),
-    //         headers: registerHeader,
-    //         dataType: "json",
-    //         success: function (res) {
-    //             console.log("result === ", res);
-    //             alert("Thanks");
-    //             showScreens('registerthank');
-    //         },
-    //         error: function (err) 
-    //         {
-    //             console.log("Error ==== ", err);
-    //             alert("Error");
-    //         }
-    //   });
-
-      var settings = {
-        "url": "https://kerakollapi.zeroprompts.com/api/Customer/SaveUser",
-        "method": "POST",
-        "timeout": 0,
-        "headers": {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
-            "Access-Control-Allow-Headers": "Content-Type, x-requested-with"
-        },
-        "data": JSON.stringify({
-          "first_Name": "sss",
-          "last_Name": "sss",
-          "full_Name": "sssss sss",
-          "phone_Number": "9991116666",
-          "email_Address": "ssss@sss.ddddd",
-          "aadhaar_Info": "987654323456",
-          "address_Line1": "sssdf sdfsdfsdf",
-          "language_Preference": "dsfsdf",
-          "location_Page": "sdfsdf",
-          "iP_Address": "111111",
-          "oS_Details": "dsfsdf",
-          "browser_Details": "ssdfsdfsdtring"
-        }),
-      };
-      
-      $.ajax(settings).done(function (response) {
-        console.log(response);
+        $.ajax({
+            type: "POST",
+            url: registerURL, 
+            data: JSON.stringify(userlist),
+            headers: registerHeader,
+            dataType: "json",
+            success: function (res) {
+                console.log("result === ", res);
+                showScreens('registerthank');
+            },
+            error: function (err) 
+            {
+                console.log("Error ==== ", err);
+            }
       });
  
-      
+
+
+// fetch(registerURL, {
+//     method: 'POST',
+//     headers: registerHeader,
+//     body: JSON.stringify(userlist),
+// })
+//   .then(response => {
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+//     return response.json();
+//   })
+//   .then(newUserData => {
+//     console.log('New User Data:', newUserData);
+//   })
+//   .catch(error => {
+//     console.error('Error:', error);
+//   });
+
+
 }
 // Register === end 
 
