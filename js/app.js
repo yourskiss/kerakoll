@@ -58,9 +58,9 @@ $(document).on('keyup keypress', 'input[type="text"], input[type="submit"]', fun
     
  // get ipAddress === start 
     var getIpAddress = '';
-    $.getJSON("//api.ipify.org?format=json", function(data) { 
-        getIpAddress = data.ip;
-    });
+   // $.getJSON("https://api.ipify.org?format=json", function(data) { 
+   //     getIpAddress = data.ip;
+   // });
  // get ipAddress === end 
 
 
@@ -89,10 +89,8 @@ $(document).on('keyup keypress', 'input[type="text"], input[type="submit"]', fun
 
  
  var screenLS = localStorage.getItem('screen'); // selected screen
- var baseurl = "//20.197.32.117:3035/api/"; // baseurl
-
-
-
+ var baseurl = "https://kerakollapi.zeroprompts.com/api/"; // baseurl
+ 
  // show Prompt  === start
  function showPwaPrompt()
  {
@@ -275,28 +273,49 @@ function getLogin()
     const loginHeader = { 
         'Access-Control-Allow-Origin': '*',
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-        'Access-Control-Allow-Headers': 'Content-Type, x-requested-with'
+        'Content-Type': 'application/json'
+       // 'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
+       // 'Access-Control-Allow-Headers': 'Content-Type, x-requested-with'
     };
-    $.ajax({
-        type: "GET",
-        url: baseurl+"Customer/UserInfo?userid="+useridLogin+"&phonenumber="+ mobileLogin, // "https://jsonplaceholder.typicode.com/posts/1",
-        dataType: "json",
-        headers  : loginHeader,
-        success: function (result) {
-            console.log(result);
-            alert('thanks');
-            showScreens('dashboard');
+
+    var settings = {
+        "url": "https://kerakollapi.zeroprompts.com/api/Customer/UserInfo?userid=1&phonenumber=8765456787654",
+        "method": "GET",
+        "timeout": 0,
+        "headers": {
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Content-Type" : "*",
+            "Access-Control-Accept" : "*",
+            "Access-Control-Allow-Methods" : "GET, POST, PUT, PATCH, POST, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "*",
+            'Accept' : 'application/json',
+            "Content-Type" : "application/json",
         },
-        error: function (err) {
-            console.log(err);
-            alert('error');
-        }
-  });
+      };
+
+ 
+      
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+    });
+
+    // $.ajax({
+    //     type: "GET",
+    //     url: "https://kerakollapi.zeroprompts.com/api/Customer/UserInfo?userid=1&phonenumber=8765456787654", // baseurl+"Customer/UserInfo?userid="+useridLogin+"&phonenumber="+ mobileLogin, // "https://jsonplaceholder.typicode.com/posts/1",
+    //     dataType: "json",
+    //     headers  : loginHeader,
+    //     success: function (result) {
+    //         console.log(result);
+    //         alert('thanks');
+    //         showScreens('dashboard');
+    //     },
+    //     error: function (err) {
+    //         console.log(err);
+    //         alert('error');
+    //     }
+    // });
 }
 // login === end 
-
  
  
 
@@ -329,25 +348,53 @@ function getRegister()
         'Access-Control-Allow-Headers': 'Content-Type, x-requested-with'
     }
 
-        $.ajax({
-            type: "POST",
-            url: baseurl + "Customer/SaveUser", // "https://jsonplaceholder.typicode.com/posts",
-            data: JSON.stringify(userlist),
-            headers: registerHeader,
-            dataType: "json",
-            success: function (res) {
-                console.log("result === ", res);
-                alert("Thanks");
-                showScreens('registerthank');
-            },
-            error: function (err) 
-            {
-                console.log("Error ==== ", err);
-                alert("Error");
-            }
+    //     $.ajax({
+    //         type: "POST",
+    //         url: baseurl + "Customer/SaveUser", // "https://jsonplaceholder.typicode.com/posts",
+    //         data: JSON.stringify(userlist),
+    //         headers: registerHeader,
+    //         dataType: "json",
+    //         success: function (res) {
+    //             console.log("result === ", res);
+    //             alert("Thanks");
+    //             showScreens('registerthank');
+    //         },
+    //         error: function (err) 
+    //         {
+    //             console.log("Error ==== ", err);
+    //             alert("Error");
+    //         }
+    //   });
+
+      var settings = {
+        "url": "https://kerakollapi.zeroprompts.com/api/Customer/SaveUser",
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
+            "Access-Control-Allow-Headers": "Content-Type, x-requested-with"
+        },
+        "data": JSON.stringify({
+          "first_Name": "sss",
+          "last_Name": "sss",
+          "full_Name": "sssss sss",
+          "phone_Number": "9991116666",
+          "email_Address": "ssss@sss.ddddd",
+          "aadhaar_Info": "987654323456",
+          "address_Line1": "sssdf sdfsdfsdf",
+          "language_Preference": "dsfsdf",
+          "location_Page": "sdfsdf",
+          "iP_Address": "111111",
+          "oS_Details": "dsfsdf",
+          "browser_Details": "ssdfsdfsdtring"
+        }),
+      };
+      
+      $.ajax(settings).done(function (response) {
+        console.log(response);
       });
-
-
  
       
 }
