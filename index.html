@@ -30,6 +30,7 @@
             <li>About</li>
             <li>Blog</li>
           </ul> -->
+          <p id="logoutButton"><span onclick="logout();">Logout</span></p>
     </header>
     <!-- header start -->
     
@@ -166,6 +167,18 @@
     <div></div>
 </div>
 <!-- loader end -->
+
+
+<!-- alertPopup  start -->
+<div class="alertPopup" id="alertPopup">
+    <section>
+        <h2 id="alertmsg"></h2>
+        <p>
+            <span class="pwaPromptButton" onclick="showHideAlert('hide', '');">Close</span>
+        </p>
+    </section>
+</div>
+<!-- alertPopup end -->
 
 
 <script src="js/jquery-min.js" ></script>

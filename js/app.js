@@ -58,9 +58,9 @@ $(document).on('keyup keypress', 'input[type="text"], input[type="submit"]', fun
     
  // get ipAddress === start 
     var getIpAddress = '';
-   // $.getJSON("https://api.ipify.org?format=json", function(data) { 
-   //     getIpAddress = data.ip;
-   // });
+    $.getJSON("https://api.ipify.org?format=json", function(data) { 
+        getIpAddress = data.ip;
+    });
  // get ipAddress === end 
 
 
@@ -120,6 +120,14 @@ function showScreens(val)
 
 
 
+// logout === start 
+function logout()
+{
+    showScreens('login')
+    localStorage.removeItem('logintoken');
+    $("#logoutButton").hide();
+}
+// logout === end 
 
 
 // set screen === start 
@@ -134,6 +142,11 @@ function showScreens(val)
     else
     {
         $("#"+screenLS+"_screen").slideDown(300);
+
+        if(screenLS == 'dashboard' &&  localStorage.getItem('logintoken') != null)
+        {
+            showuserdetails();
+        }
     }
  }
  setScreens();
@@ -268,38 +281,28 @@ function loginValidation()
 // login === start 
 function getLogin()
 {
-    var useridLogin = 1;
+    var useridLogin = 0;
     var mobileLogin = $("#mobileLogin").val()
-    const loginHeader = { 
-        "Access-Control-Allow-Origin" : "*",
-        "Access-Control-Content-Type" : "*",
-        "Access-Control-Accept" : "*",
-        "Access-Control-Allow-Methods" : "GET, POST, PUT, PATCH, POST, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "*",
-        'Accept' : 'application/json',
-        "Content-Type" : "application/json"
-    };
-    console.log("header ===", loginHeader);
-
     $.ajax({
         type: "GET",
-        url: baseurl+"Customer/UserInfo?userid="+useridLogin+"&phonenumber="+ mobileLogin, // "https://jsonplaceholder.typicode.com/posts/1",
+        url: baseurl+"Customer/UserInfo?userid="+useridLogin+"&phonenumber="+ mobileLogin,  
         dataType: "json",
-        headers  : loginHeader,
+        headers : { 'Accept' : 'application/json', "Content-Type" : "application/json" },
         success: function (res) {
-                        console.log("result === ", res);
+                         console.log("result === ", res);
                         if(res.result_Code == 0)
                         {
+                           localStorage.setItem('logintoken', mobileLogin)
                             showScreens('dashboard');
+                            $("#logoutButton").show();
                         }
                         else
                         {
-                            alert(res.result_Status);
+                            showHideAlert('show', res.result_Status);
                         }
         },
         error: function (err) {
-            console.log(err);
-            alert('error');
+            showHideAlert('show', err);
         }
     });
 }
@@ -310,7 +313,7 @@ function getLogin()
 // Register === start 
 function getRegister()
 {
-    const registerURL =  baseurl + "Customer/SaveUser"; // "https://jsonplaceholder.typicode.com/posts",
+    const registerURL =  baseurl + "Customer/SaveUser";  
     var userlist = {
         first_Name: $("#firstname").val(),
         last_Name: $("#lastname").val(),
@@ -325,48 +328,84 @@ function getRegister()
         oS_Details: getOs,
         browser_Details: getBrowser
     }
-    console.log("userlist row ===", userlist);
-    console.log("userlist json ===", JSON.stringify(userlist));
-
-    var registerHeader = {    
-        "Access-Control-Allow-Origin" : "*",
-        "Access-Control-Content-Type" : "*",
-        "Access-Control-Accept" : "*",
-        "Access-Control-Allow-Methods" : "GET, POST, PUT, PATCH, POST, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "*",
-        'Accept' : 'application/json',
-        "Content-Type" : "application/json"
-    }
-    console.log("header ===", registerHeader);
+ 
 
         $.ajax({
             type: "POST",
             url: registerURL, 
             data: JSON.stringify(userlist),
-            headers: registerHeader,
+            headers: { 'Accept' : 'application/json', "Content-Type" : "application/json" },
             dataType: "json",
             success: function (res) {
-                        console.log("result === ", res);
+                         console.log("result === ", res);
                         if(res.result_Code == 0)
                         {
                             showScreens('registerthank');
                         }
                         else
                         {
-                            alert(res.result_Status);
+                            showHideAlert('show', res.result_Status);
                         }
             },
             error: function (err) 
             {
-                console.log("Error ==== ", err);
+                showHideAlert('show', err);
             }
       });
- 
-
-
- 
-
 }
 // Register === end 
 
 
+// showHideAlert === start 
+function showHideAlert(val, msg)
+{
+    $("#alertmsg").html(msg);
+    if(val == 'show')
+    {
+        $("#alertPopup").fadeIn(300);
+    }
+    else if(val == 'hide')
+    {
+        $("#alertPopup").fadeOut(300);
+    }
+    else
+    {
+        // nothing
+    }
+}
+// showHideAlert === end 
+
+
+
+
+// showHideAlert === start 
+function showuserdetails()
+{
+    var storedata = '';
+    var useridLogin = 0;
+    var logintoken = localStorage.getItem('logintoken');
+    $.ajax({
+        type: "GET",
+        url: baseurl+"Customer/UserInfo?userid=0&phonenumber="+ logintoken,  
+        dataType: "json",
+        headers : { 'Accept' : 'application/json', "Content-Type" : "application/json" },
+        success: function (res) {
+                         console.log("result === ", res);
+                        if(res.result_Code == 0)
+                        {
+                            storedata += `<h2>${res.result.first_Name}</h2><p>${res.result.phone_Number}</p></div>`;  
+              
+                            
+                            $("#datacontainer").html(storedata);
+                        }
+                        else
+                        {
+                            showHideAlert('show', res.result_Status);
+                        }
+        },
+        error: function (err) {
+            showHideAlert('show', err);
+        }
+    });
+}
+// showHideAlert === end 
