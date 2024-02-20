@@ -286,10 +286,16 @@ function getLogin()
         url: baseurl+"Customer/UserInfo?userid="+useridLogin+"&phonenumber="+ mobileLogin, // "https://jsonplaceholder.typicode.com/posts/1",
         dataType: "json",
         headers  : loginHeader,
-        success: function (result) {
-            console.log(result);
-            alert('thanks');
-            showScreens('dashboard');
+        success: function (res) {
+                        console.log("result === ", res);
+                        if(res.result_Code == 0)
+                        {
+                            showScreens('dashboard');
+                        }
+                        else
+                        {
+                            alert(res.result_Status);
+                        }
         },
         error: function (err) {
             console.log(err);
@@ -340,8 +346,15 @@ function getRegister()
             headers: registerHeader,
             dataType: "json",
             success: function (res) {
-                console.log("result === ", res);
-                showScreens('registerthank');
+                        console.log("result === ", res);
+                        if(res.result_Code == 0)
+                        {
+                            showScreens('registerthank');
+                        }
+                        else
+                        {
+                            alert(res.result_Status);
+                        }
             },
             error: function (err) 
             {
@@ -351,24 +364,7 @@ function getRegister()
  
 
 
-// fetch(registerURL, {
-//     method: 'POST',
-//     headers: registerHeader,
-//     body: JSON.stringify(userlist),
-// })
-//   .then(response => {
-//     if (!response.ok) {
-//       throw new Error('Network response was not ok');
-//     }
-//     return response.json();
-//   })
-//   .then(newUserData => {
-//     console.log('New User Data:', newUserData);
-//   })
-//   .catch(error => {
-//     console.error('Error:', error);
-//   });
-
+ 
 
 }
 // Register === end 
