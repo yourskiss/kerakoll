@@ -23,140 +23,151 @@
 <main>
 
     <!-- header start -->
-    <header>
-          <h1>kerakoll</h1>
-          <!-- <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Blog</li>
-          </ul> -->
-          <p id="logoutButton"><span onclick="logout();">Logout</span></p>
+    <header class="outer_header">
+        <img class="logo" src="images/logo.png" alt="kerakoll" />
+        <p id="logoutButton"><span onclick="logout();">Logout</span></p>
     </header>
-    <!-- header start -->
-    
+    <!-- header end -->
 
     
-    <!-- loginScreen start -->
-    <div class="screen" id="login_screen"> 
-        <div class="registerHead">Login</div>
-        <div class="registercontainer" id="loginForm">
-            <section>
-                <h3>Entra nel mondo Kerakoll</h3>
-                <div class="registerField mf25">
-                    <input class="mf_input" type="text" id="mobileLogin" placeholder="Mobile number:"  onkeypress="return isNumber(event)"  maxlength="10"  />
-                    <span class="mf_error" id="error_mobileLogin">Mobile number</span>
-                </div>
-            </section>
-        </div>
-        <div class="registercontainer" id="loginOtp" style="display: none;">
-            <section>
-                <h4 >OTP Sant to your mobile number</h4>
-                <div class="registerField mf25">
-                    <input class="mf_input" type="text" id="OtpLogin" placeholder="OTP:"  maxlength="6" onkeypress="return isNumber(event)"   />
-                    <span class="mf_error" id="error_OtpLogin">Otp</span>
-                </div>
-                <p>Not reveived?  <span>Resend OTP</span></p>
-            </section>
-        </div>
-        <div class="registerSubmit">
-            <span class="register_button" onclick="return loginValidation();">Login</span>
-        </div>
-        <div class="registerText">Do not have account <span onclick="showScreens('register');">REGISTERE NOW</span></div>
-    </div>
-    <!-- loginScreen end -->
 
-
-
-
-    <!-- registerScreen start -->
-    <div class="screen" id="register_screen"> 
-        <div class="registerHead">REGISTERED</div>
-        <div class="registercontainer" id="registerForm">
-            <section>
-                <h3>Entra nel mondo Kerakoll</h3>
-                <div class="registerField mf50">
-                    <input class="mf_input" type="text" id="firstname" placeholder="First Name:" onkeypress="return isLetter(event)" maxlength="20" />
-                    <span class="mf_error" id="error_firstname">First Name</span>
+    <!-- screen start -->
+    <section class="screenmain" > 
+ 
+            <!-- loginScreen start -->
+            <section class="screencontainer" id="login_screen">
+                <div class="registerHead">Welcome! Sign in here</div>
+                <div class="registercontainer" id="login_container_mobile">
+                    <section>
+                        <div class="registerField">
+                            <input class="registerInput" type="text" id="login_mobile" placeholder="Mobile number"  onkeypress="return isNumber(event)"  maxlength="10"  />
+                            <span class="registerError" id="error_login_mobile"></span>
+                        </div>
+                    </section>
                 </div>
-                <div class="registerField mf50 mf50_right">
-                    <input class="mf_input" type="text" id="lastname" placeholder="Last Name:" onkeypress="return isLetter(event)" maxlength="20" />
-                    <span class="mf_error" id="error_lastname">Last Name</span>
+                <div class="registercontainer" id="login_container_otp" style="display: none;">
+                    <section>
+                        <h4 id="login_msg_otp">OTP Sant to your mobile number</h4>
+                        <div class="registerOtp">
+                            <div><aside>
+                                    <input type="text" id="login_otp"  maxlength="6" onkeypress="return isNumber(event)"   />
+                            </aside></div>
+                            <span class="registerError registerErrorOtp" id="error_login_otp"></span>
+                        </div>
+                        <div class="registerOtpText">Not reveived?  <span>Resend OTP</span></div>
+                    </section>
                 </div>
-                <div class="registerField mf50">
-                    <input class="mf_input" type="text" id="mobilenumber" placeholder="Mobile number:"  onkeypress="return isNumber(event)"  maxlength="10"  />
-                    <span class="mf_error" id="error_mobilenumber">Mobile number</span>
+                <div class="registerSubmit">
+                    <span class="register_button" onclick="return loginValidation();">Sign In</span>
                 </div>
-                <div class="registerField mf50_right">
-                    <input class="mf_input" type="text" id="emailid" placeholder="Email ID:"  maxlength="50"  />
-                    <span class="mf_error" id="error_emailid">Email ID</span>
-                </div>
-                <div class="registerField mf25">
-                    <input class="mf_input" type="text" id="adhaarnumber" placeholder="Adhaar Number:" onkeypress="return isNumber(event)"  maxlength="12"  />
-                    <span class="mf_error" id="error_adhaarnumber">Adhaar Number</span>
-                </div>
+                <div class="registerBottomText">Do not have account <span onclick="showScreens('register');">Sign Up</span></div>
             </section>
-        </div>
-        <!-- <div class="registercontainer" id="registerOtp" style="display: none;">
-            <section>
-                <h4>OTP Sant to your mobile number</h4>
-                <div class="registerField mf25">
-                    <input class="mf_input" type="text" id="OtpRegister" placeholder="OTP:"  maxlength="6" onkeypress="return isNumber(event)"   />
-                    <span class="mf_error" id="error_OtpRegister">Otp</span>
+            <!-- loginScreen end -->
+            
+            <!-- registerScreen start -->
+            <section class="screencontainer" id="register_screen">
+                <div class="registercontainer" id="register_container_mobile">
+                    <div class="registerHead">Welcome! Sign Up here</div>
+                    <section>
+                        <div class="registerField">
+                            <input class="registerInput" type="text" id="register_mobile" placeholder="Mobile number"  onkeypress="return isNumber(event)"  maxlength="10"  />
+                            <span class="registerError" id="error_register_mobile"></span>
+                        </div>
+                    </section>
                 </div>
-                <p>Not reveived?  <span>Resend OTP</span></p>
+                <div class="registercontainer" id="register_container_form"  style="display: none;">
+                    <section>
+                        <div class="registerHead">Setup your profile</div>
+                        <div class="registerPhotoField">
+                            <input type="file" id="register_photo" accept=".jpg, .jpeg, .png" onchange="profilepicture('register_photo','error_register_photo');" />
+                            <p>Add Profile Photo</p>
+                            <span class="registerError" id="error_register_photo"></span>
+                        </div>
+                        <div class="registerField">
+                            <input class="registerInput" type="text" id="register_firstname" placeholder="First Name" onkeypress="return isLetter(event)" maxlength="20" />
+                            <span class="registerError" id="error_register_firstname"></span>
+                        </div>
+                        <div class="registerField">
+                            <input class="registerInput" type="text" id="register_lastname" placeholder="Last Name" onkeypress="return isLetter(event)" maxlength="20" />
+                            <span class="registerError" id="error_register_lastname"></span>
+                        </div>
+                        <div class="registerField">
+                            <input class="registerInput" type="text" id="register_emailid" placeholder="Email ID"  maxlength="50"  />
+                            <span class="registerError" id="error_register_emailid"></span>
+                        </div>
+                        <div class="registerField">
+                            <select class="registerSelect" id="register_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <span class="registerError" id="error_register_gender"></span>
+                        </div>
+                        <div class="registerField">
+                            <input class="registerInput" type="text" id="register_city" placeholder="City" onkeypress="return isLetter(event)"  maxlength="25"  />
+                            <p>Enter nearby city name</p>
+                            <span class="registerError" id="error_register_city"></span>
+                        </div>
+                        <div class="registerField">
+                            <input class="registerInput" type="text" id="register_aadhaar" placeholder="Aadhaar Number:" onkeypress="return isNumber(event)"  maxlength="12"  />
+                            <p>Profile details should match with Aadhaar</p>
+                            <span class="registerError" id="error_register_aadhaar"></span>
+                        </div>
+                    </section>
+                </div>
+                <div class="registercontainer" id="register_container_otp" style="display: none;">
+                    <section>
+                        <div class="registerHead">Welcome! Sign Up here</div>
+                        <h4 id="register_msg_otp">OTP Sant to your mobile number</h4>
+                        <div class="registerOtp">
+                            <div><aside>
+                                    <input type="text" id="register_otp" maxlength="6" onkeypress="return isNumber(event)"   />
+                            </aside></div>
+                            <span class="registerError registerErrorOtp" id="error_register_otp"></span>
+                        </div>
+                        <div class="registerOtpText">Not reveived?  <span>Resend OTP</span></div>
+                    </section>
+                </div> 
+                <div class="registerSubmit">
+                    <span class="register_button" onclick="return registerValidation();">Sign Up</span>
+                </div>
+                <div class="registerBottomText">Already have an account? <span onclick="showScreens('login');">LOGIN</span></div>
             </section>
-        </div> -->
-        <div class="registerSubmit">
-            <span class="register_button" onclick="return registerValidation();">REGISTER</span>
-        </div>
-        <div class="registerText">Registered Already? <span onclick="showScreens('login');">LOGIN</span></div>
-    </div>
-    <!-- registerScreen end -->
+            <!-- registerScreen end -->
 
 
  
 
-    <!-- thanksScreen start -->
-    <div class="screen" id="registerthank_screen"> 
-        <div class="registerHead">Registration Successful.</div>
-        <div class="registercontainer">
-            <section>
-                <h3>Entra nel mondo Kerakoll Entra nel mondo Kerakoll Entra nel mondo Kerakoll</h3>
+            <!-- thanksScreen start -->
+            <section class="screencontainer" id="registerthank_screen">
+                <div class="registerHead">Registration Successful.</div>
+                <div class="registercontainer">
+                    <section>
+                        <h3>Entra nel mondo Kerakoll Entra nel mondo Kerakoll Entra nel mondo Kerakoll</h3>
+                    </section>
+                </div>
+                <div class="registerBottomText">Click here to <span onclick="showScreens('login');">LOGIN</span></div>
             </section>
-        </div>
-        <div class="registerText">Click here to <span onclick="showScreens('login');">LOGIN</span></div>
-    </div>
-    <!-- thanksScreen end -->
+            <!-- thanksScreen end -->
 
 
 
-    <!-- dashboard start -->
-    <div class="screen" id="dashboard_screen"> 
-        <h1>Dashboard</h1>
-        <ul id="datacontainer"></ul>
-    </div>
-    <!-- dashboard end -->
+            <!-- dashboard start -->
+            <section class="screencontainer" id="dashboard_screen">
+                <h1>Dashboard</h1>
+                <ul id="datacontainer"></ul>
+            </section>
+            <!-- dashboard end -->
+
+ 
 
 
-
+    </section>
+    <!-- screen end -->
 
 </main>
-<!-- main start -->
+<!-- main end -->
  
-
-
-
-<!-- pwa Prompt  start -->
-<div class="pwaPromptPopup" id="pwaPrompt">
-    <section>
-        <h2>Install PWA</h2>
-        <p>
-            <span id="pwaInstall" class="pwaPromptButton" onclick="closePwaPrompt();">Install</span>
-            <span id="pwaCancel" class="pwaPromptButton" onclick="closePwaPrompt();">cancel</span>
-        </p>
-    </section>
-</div>
-<!-- pwa Prompt start -->
 
 
 
@@ -167,6 +178,20 @@
     <div></div>
 </div>
 <!-- loader end -->
+
+
+<!-- pwa Prompt  start -->
+<div class="pwaPromptPopup" id="pwaPrompt">
+    <section>
+        <h2>Install PWA</h2>
+        <p>
+            <span id="pwaInstall" class="pwaPromptButton" onclick="showHidePwaPrompt('hide');">Install</span>
+            <span id="pwaCancel" class="pwaPromptButton" onclick="showHidePwaPrompt('hide');">cancel</span>
+        </p>
+    </section>
+</div>
+<!-- pwa Prompt start -->
+ 
 
 
 <!-- alertPopup  start -->
@@ -181,12 +206,13 @@
 <!-- alertPopup end -->
 
 
+
+
 <script src="js/jquery-min.js" ></script>
 <script src="js/app.js"></script>
-<script src="js/main.js">
+<script src="js/main.js"></script>
 
 
 
-</script>
 </body>
 </html>

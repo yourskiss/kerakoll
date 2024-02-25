@@ -3,7 +3,7 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
 
 /* ################### Loader ################### */
 .pageloader {display: none;position: fixed;left: 0;top: 0;z-index: 9;width: 100%;height: 100%;margin: 0;padding: 0;background: #000000; background: rgba(0, 0, 0, 0.7);text-align: center;}
-.pageloader div {position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);border: 16px solid #f3f3f3;border-radius: 50%;border-top: 16px solid #3498db;width: 120px;height: 120px;-webkit-animation: spin 2s linear infinite; animation: spin 2s linear infinite; }
+.pageloader div {position: absolute;left: 50%;top: 50%; margin: -37px 0 0 -37px; border:7px solid #fff; border-radius: 50%; border-top:7px solid #afcdaf;width:60px;height:60px;-webkit-animation: spin 2s linear infinite; animation: spin 2s linear infinite; }
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
   100% { -webkit-transform: rotate(360deg); }
@@ -33,72 +33,45 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
 
 
 
-body { background-color: #000; }
-main { display: flow-root; background-color: #fff; width:100%; max-width: 900px; margin: 0 auto; float: none; }
+body { background-color: #fff; margin:0;padding:0;box-sizing:border-box;line-height:1 }
+main { display: flow-root; background-color: #f5f0eb; width:100%; max-width:1024px; margin: 0 auto; float: none; }
 
-header {
-  width: 100%;
-  float: left;
-  border-radius: 0;
-  background: #fff;
-  padding: 1rem;
-}
-header  h1 {
-  width: 50%;
-  float: left;
-  text-align: left;
-  text-transform: uppercase;
-  font-family: Arial, sans-serif;
-  font-weight: 500;
-  color: #000;
-  font-size: 24px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-  letter-spacing: 1px;
-}
-header  p {
-  display: none;
-  width: 50%;
-  float: right;
-  text-align: right;
-  text-transform: none;
-  font-family: Arial, sans-serif;
-  font-weight: 500;
-  color: #000;
-  font-size:18px;
-}
+/* header */
+.outer_header {width: 100%;float: left; padding:2rem 1rem 0 1rem; text-align: center; }
+.outer_header .logo { display: inline-block; float:none;width: 100%; max-width: 170px; margin: 0; padding:0;}
+.outer_header p {  text-align: center; color:#f30; line-height: 1.2; font-size:14px; font-family: Arial, Helvetica, sans-serif; text-transform: none;  } 
+
+/* screen */
+.screenmain { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; width: 100%; min-height: calc(100vh - 110px); float: left; background-color: #f5f0eb; padding: 1rem 2rem;  }
+.screencontainer { display: none; width: 100%; height: auto; float: left; }
 
 
 
-/* register container */
-.screen { display: none; width: 100%; float: left; border-radius: 0; background: #ddd; padding: 2rem; }
-
-.registerHead { width: 100%; float: left;text-align: center; text-transform: uppercase; font-family: Arial, sans-serif; font-weight: 500; color: #000; font-size: 18px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);  }
-.registerText { margin-top: 1.5rem; width: 100%; float: left; text-align: center; text-transform: none; font-family:Arial,sans-serif;font-weight: 500;color: #000; font-size: 16px; }
-.registerText span { display: inline-block; text-decoration:underline; cursor: pointer; color: #000; transition: all 0.5s ease-out;  }
-.registerText span:hover {   color: #f30;  transition: all 0.5s ease-in;  }
+/* register */
+.registerHead { width: 100%; float: left;text-align: center; text-transform: uppercase; font-family: Arial, sans-serif; font-weight: 500; color: #000; font-size: 18px;    }
 .registercontainer { width: 100%; float: left; margin-top: 1rem; }
 .registercontainer section { margin: 0; padding: 0; width: 100%; float: left;   display: flex; justify-content: space-between; align-items: flex-start;flex-wrap: wrap; }
-.registercontainer h3, .registercontainer h4 { width: 100%;float: left;text-align: center;text-transform: none;font-family: Arial, sans-serif;font-weight: 500; color: #000;font-size: 16px;  margin-top:0.5rem; }
-.registercontainer h4 { color: #1c931b; }
-.registercontainer p { margin-top:0.5rem; width: 100%; float: left; text-align: center; text-transform: none; font-family:Arial,sans-serif;font-weight: 500;color: #000; font-size: 14px; }
-.registercontainer p span { display: inline-block; text-decoration:underline; cursor: pointer; color: #000; transition: all 0.5s ease-out;  }
-.registercontainer p span:hover {   color: #f30;  transition: all 0.5s ease-in;  }
-.registerField {float: left;text-align: center; margin-top: 1.5rem;}
-.mf_input {  float: left;  width: 100%;  padding: 0.7rem 1rem;  border: 0;  outline: none;  background: #fff;  border-radius: 5px;  text-align: left;  font-family: Arial, sans-serif;  font-weight: 500;  color: #000;  font-size: 16px;  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.3); }
-.mf_input::-webkit-input-placeholder { color: #000; opacity: 1;}
-.mf_input:-ms-input-placeholder{ color: #000; opacity: 1;}
-.mf_input::placeholder { color: #000;  opacity: 1;}
-.mf_error { display: none; margin-top: 0.7rem; float: left; width: 100%; text-align: center;font-family: Arial, sans-serif; font-weight: 500; color: #f30; font-size: 14px;}
-.registerField.mf100 { width: 100%;}
-.registerField.mf50 {  width: 48%;}
-.registerField.mf50_right {  width: 48%;  float: right;}
-.registerField.mf25 {  width: 50%;  margin-left: 25%;  margin-bottom: 1rem;}
- .registerField.mf75 {  width: 75%;  margin: 1rem 12.5%;}
-.registerField.mf33 {  width: 50%;  margin: 2rem 25%;}
- .registerSubmit {  margin-top: 1.5rem;  float: left;  width: 100%;  text-align: center;}
-.register_button {  display: inline-block;  margin: 0 auto;  padding:0.8rem 1.5rem;  text-align: center;  background: #000;  font-family:Arial, sans-serif;  font-weight: 700;  font-size: 16px;  color: #fff;  border: none;  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.3);  transition: all 0.5s ease-out;  border-radius: 5px;  text-decoration: none;   cursor: pointer;  text-transform: uppercase; }
-.register_button:hover { background: #fff;  color: #000000;  transition: all 0.5s ease-in; }
+.registercontainer h4 { width: 100%;float: left;text-align: center;text-transform: none;font-family: Arial, sans-serif;font-weight: 500; color: #1c931b;font-size: 16px;  margin-top:0.5rem; }
+.registercontainer p { margin:0.5rem 0 0 0; padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-family:Arial,sans-serif;font-weight: 500;color: #000; font-size: 14px; }
+.registerField { width: 100%; float: left;text-align: center; margin-top: 1.5rem;}
+.registerInput {  float: left;  width: 100%;  padding: 0.7rem 1rem;  border: 0; border-bottom: solid 1px #000; outline: none;  background:transparent;  border-radius: 0;  text-align: left;  font-family: Arial, sans-serif;  font-weight: 500;  color: #000;  font-size: 16px;  box-shadow:none; }
+.registerInput::-webkit-input-placeholder { color: #999; opacity: 1;}
+.registerInput:-ms-input-placeholder{ color: #999; opacity: 1;}
+.registerInput::placeholder { color: #999;  opacity: 1;}
+.registerSelect {  float: left;  width: 100%;  padding: 0.7rem 1rem;  border: 0; border-bottom: solid 1px #000; outline: none;  background:transparent;  border-radius: 0;  text-align: left;  font-family: Arial, sans-serif;  font-weight: 500;  color: #000;  font-size: 16px;  box-shadow:none; }
+.registerError { display: none; margin-top: 0.7rem; padding: 0 1rem; float: left; width: 100%; text-align: left;font-family: Arial, sans-serif; font-weight: 500; color: #f30; font-size: 14px;}
+.registerError.registerErrorOtp { text-align: center; }
+.registerSubmit {  margin-top: 1.5rem;  float: left;  width: 100%;  text-align: center;}
+.register_button { width: 100%; display: inline-block;  margin: 0 auto;  padding:0.9rem 2.5rem;  text-align: center;  background: #afcdaf;  font-family:Arial, sans-serif;  font-weight: 700;  font-size: 16px;  color: #000;  border: none;   transition: all 0.5s ease-out;  border-radius: 0;  text-decoration: none;   cursor: pointer;  text-transform: none; }
+.register_button:hover { background: #464646;  color: #fff;  transition: all 0.5s ease-in; }
 .register_button.disabled { user-select: none;  pointer-events: none;  opacity: 0.4; }
-
- 
- 
+.registerOtpText { margin: 1rem 0 0.5rem 0; padding: 0; width: 100%; float: left; text-align: center; text-transform: none; font-family:Arial,sans-serif;font-weight: 500;color: #000; font-size: 14px; }
+.registerOtpText span { display: inline-block; text-decoration:underline; cursor: pointer; color: #000; transition: all 0.5s ease-out;  }
+.registerOtpText span:hover {   color: #f30;  transition: all 0.5s ease-in;  }
+.registerBottomText { margin-top: 1.5rem; width: 100%; float: left; text-align: center; text-transform: none; font-family:Arial,sans-serif;font-weight: 500;color: #000; font-size: 16px; }
+.registerBottomText span { display: inline-block; text-decoration:underline; cursor: pointer; color: #000; transition: all 0.5s ease-out;  }
+.registerBottomText span:hover {   color: #f30;  transition: all 0.5s ease-in;  }
+.registerOtp {float: left; width: 100%; margin:1rem 0 0 0; padding: 0; text-align: center; }
+.registerOtp div { width: 255px; height: 35px; margin: 0 auto; float: none; padding: 0; display: inline-block; overflow: hidden; }
+.registerOtp aside { left: 0; position: sticky; }
+.registerOtp aside input[type='text'] { margin: 0; padding:0 0 0 16px; letter-spacing:34px; border: 0; outline: none; width: 270px; min-width: 270px;  background: none; background-image: linear-gradient(to left, #dedede 85%, rgba(222, 222, 222, 0) 0%);background-position: bottom; background-size:42px 5px;background-repeat: repeat-x;background-position-x: 40px; text-align: center; font-size: 18px; line-height: 36px; font-weight: bold; font-family: 'Dinpro-Bold'; color: #000; }

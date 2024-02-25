@@ -5,6 +5,8 @@ $(window).on('orientationchange', function ()
 });
 // page refresh on orientation change === END 
 
+
+
  
 // only number validation === start
 function isNumber(e) 
@@ -20,6 +22,8 @@ function isNumber(e)
 
 
 
+
+
 // only Letter validation === start
 function isLetter(e) 
 {
@@ -31,6 +35,9 @@ function isLetter(e)
     return false
 }
 // only Letter validation === end
+
+
+
 
  // only AlphaNumeric  === start
 function isAlphaNumeric(e) 
@@ -45,6 +52,9 @@ function isAlphaNumeric(e)
 // only AlphaNumeric  === end
     
 
+
+
+
  // disable enter key  === start
 $(document).on('keyup keypress', 'input[type="text"], input[type="submit"]', function(e) {
   if(e.keyCode == 13) 
@@ -55,6 +65,8 @@ $(document).on('keyup keypress', 'input[type="text"], input[type="submit"]', fun
 });
  // disable enter key  === end
 
+
+
     
  // get ipAddress === start 
     var getIpAddress = '';
@@ -64,6 +76,8 @@ $(document).on('keyup keypress', 'input[type="text"], input[type="submit"]', fun
  // get ipAddress === end 
 
 
+
+
 // get osName === start 
     var getOs = 'Unknown';
     if (navigator.appVersion.indexOf("Win") != -1) { getOs = 'Windows' }
@@ -71,6 +85,8 @@ $(document).on('keyup keypress', 'input[type="text"], input[type="submit"]', fun
     if (navigator.appVersion.indexOf("X11") != -1) {  getOs = 'UNIX' }
     if (navigator.appVersion.indexOf("Linux") != -1) { getOs = 'Linux' }
  // get osName === end 
+
+
 
 
 // get browserName === start 
@@ -87,274 +103,22 @@ $(document).on('keyup keypress', 'input[type="text"], input[type="submit"]', fun
  // get browserName === end 
 
 
- 
- var screenLS = localStorage.getItem('screen'); // selected screen
- var baseurl = "https://kerakollapi.zeroprompts.com/api/"; // baseurl
- 
- // show Prompt  === start
- function showPwaPrompt()
+ // show hide Prompt  === start
+ function showHidePwaPrompt(val)
  {
     // debugger;
-    $("#pwaPrompt").fadeIn(300);
- }
-// show Prompt  === end
-
- // close Prompt  === start
- function closePwaPrompt()
- {
-    $("#pwaPrompt").fadeOut(300);
- }
- // close Prompt  === end
- 
-
-
-// change screen === start 
-function showScreens(val)
-{
-    // debugger;
-    localStorage.setItem('screen', val);
-    $('.screen').slideUp(300);
-    $("#"+val+"_screen").slideDown(300);
-}
-// change screen === end 
-
-
-
-// logout === start 
-function logout()
-{
-    showScreens('login')
-    localStorage.removeItem('logintoken');
-    $("#logoutButton").hide();
-}
-// logout === end 
-
-
-// set screen === start 
- function setScreens()
- {
-    // debugger;
-    $('.screen').slideUp(300);
-    if(screenLS == null)
+    if(val == 'hide')
     {
-        $("#login_screen").slideDown(300);
+        $("#pwaPrompt").fadeOut(300);
     }
     else
     {
-        $("#"+screenLS+"_screen").slideDown(300);
-
-        if(screenLS == 'dashboard' &&  localStorage.getItem('logintoken') != null)
-        {
-            showuserdetails();
-        }
+        $("#pwaPrompt").fadeIn(300);
     }
  }
- setScreens();
-// set screen === end 
+// show hide Prompt  === end
 
-
-
-
-
-// registerValidation === start 
-function registerValidation()
-{
-    // debugger;
-    let emailReg = new RegExp('[a-z0-9._-]+@[a-z0-9]+\.[a-z]{2,7}');
-    let adhaarRegex = new RegExp(/^[2-9]{1}[0-9]{11}$/);
-    $(".mf_error").hide().html('');
-    if($("#firstname").val() == '')
-    {
-        $("#error_firstname").show().html('Please enter your first name');
-        return false;
-    }
-    else if($("#lastname").val() == '')
-    {
-        $("#error_lastname").show().html('Please enter your last name');
-        return false;
-    }
-    else if($("#mobilenumber").val() == '')
-    {
-        $("#error_mobilenumber").show().html('Please enter your mobile number');
-        return false;
-    }
-    else if ($("#mobilenumber").val().length !== 10) 
-    {
-        $("#error_mobilenumber").show().html('Please enter 10 digit mobile number');
-        return false;
-    }
-    else if (($("#mobilenumber").val().indexOf('9')) != 0 && ($("#mobilenumber").val().indexOf('8')) != 0 && ($("#mobilenumber").val().indexOf('7')) != 0 && ($("#mobilenumber").val().indexOf('6')) != 0) 
-    {
-        $("#error_mobilenumber").show().html('Mobile number start with digits like 9, 8, 7, 6');
-        return false;
-    }
-    else if($("#emailid").val() == '')
-    {
-        $("#error_emailid").show().html('Please enter your email address');
-        return false;
-    }
-    else if (!emailReg.test($("#emailid").val())) 
-    {
-        $("#error_emailid").show().html('Please enter valid email address');
-        return false;
-    }
-    else if($("#adhaarnumber").val() == '')
-    {
-        $("#error_adhaarnumber").show().html('Please enter adhaar number');
-        return false;
-    }
-    else if ($("#adhaarnumber").val().length !== 12) 
-    {
-        $("#error_adhaarnumber").show().html('Please enter 12 digit adhaar number');
-        return false;
-    }
-    else if (!adhaarRegex.test($("#adhaarnumber").val())) 
-    {
-        $("#error_adhaarnumber").show().html('Please enter valid adhaar number');
-        return false;
-    }
-    
-    else 
-    {
-            $(".mf_error").hide().html('');
-            $("#pageloader").fadeIn(300);
-            getRegister();
-            $("#pageloader").fadeOut(300);
-            return true;
-    }
-}
-// registerValidation === end 
  
-
-
-
-
-// loginValidation === start 
-function loginValidation()
-{
-    debugger;
-    $(".mf_error").hide().html('');
-    if($("#mobileLogin").val() == '')
-    {
-        $("#error_mobileLogin").show().html('Please enter mobile number');
-        return false;
-    }
-    else if($("#mobileLogin").val().length != 10)
-    {
-        $("#error_mobileLogin").show().html('Please enter valid mobile number');
-        return false;
-    }
-    else if (($("#mobileLogin").val().indexOf('9')) != 0 && ($("#mobileLogin").val().indexOf('8')) != 0 && ($("#mobileLogin").val().indexOf('7')) != 0 && ($("#mobileLogin").val().indexOf('6')) != 0) 
-    {
-        $("#error_mobileLogin").show().html('Mobile number start with digits like 9, 8, 7, 6');
-        return false;
-    }
-    else 
-    { 
-        $("#loginForm").slideUp(200);
-        $("#loginOtp").slideDown(200);
-        if($("#OtpLogin").val() == '')
-        {
-            $("#error_OtpLogin").show().html('Please enter OTP');
-            return false;
-        }
-        else if ($("#OtpLogin").val().length !== 6) 
-        {
-            $("#error_OtpLogin").show().html('Please enter valid OTP');
-            return false;
-        }
-        else 
-        {
-            $(".mf_error").hide().html('');
-            $("#pageloader").fadeIn(300);
-            getLogin();
-            $("#pageloader").fadeOut(300);
-            return true;
-        }
-    }
-}
-// loginValidation === end 
-
-
-
-
-// login === start 
-function getLogin()
-{
-    var useridLogin = 0;
-    var mobileLogin = $("#mobileLogin").val()
-    $.ajax({
-        type: "GET",
-        url: baseurl+"Customer/UserInfo?userid="+useridLogin+"&phonenumber="+ mobileLogin,  
-        dataType: "json",
-        headers : { 'Accept' : 'application/json', "Content-Type" : "application/json" },
-        success: function (res) {
-                         console.log("result === ", res);
-                        if(res.result_Code == 0)
-                        {
-                           localStorage.setItem('logintoken', mobileLogin)
-                            showScreens('dashboard');
-                            $("#logoutButton").show();
-                        }
-                        else
-                        {
-                            showHideAlert('show', res.result_Status);
-                        }
-        },
-        error: function (err) {
-            showHideAlert('show', err);
-        }
-    });
-}
-// login === end 
- 
- 
-
-// Register === start 
-function getRegister()
-{
-    const registerURL =  baseurl + "Customer/SaveUser";  
-    var userlist = {
-        first_Name: $("#firstname").val(),
-        last_Name: $("#lastname").val(),
-        full_Name: $("#firstname").val() + ' ' + $("#lastname").val(),
-        phone_Number: $("#mobilenumber").val(),
-        email_Address: $("#emailid").val(),
-        aadhaar_Info: $("#adhaarnumber").val(),
-        address_Line1: "test address",
-        language_Preference: "English",
-        location_Page: window.location.pathname,
-        iP_Address: getIpAddress,
-        oS_Details: getOs,
-        browser_Details: getBrowser
-    }
- 
-
-        $.ajax({
-            type: "POST",
-            url: registerURL, 
-            data: JSON.stringify(userlist),
-            headers: { 'Accept' : 'application/json', "Content-Type" : "application/json" },
-            dataType: "json",
-            success: function (res) {
-                         console.log("result === ", res);
-                        if(res.result_Code == 0)
-                        {
-                            showScreens('registerthank');
-                        }
-                        else
-                        {
-                            showHideAlert('show', res.result_Status);
-                        }
-            },
-            error: function (err) 
-            {
-                showHideAlert('show', err);
-            }
-      });
-}
-// Register === end 
-
 
 // showHideAlert === start 
 function showHideAlert(val, msg)
@@ -375,28 +139,269 @@ function showHideAlert(val, msg)
 }
 // showHideAlert === end 
 
+ 
+ var screenLS = localStorage.getItem('screen'); // selected screen
+ var baseurl = "https://kerakollapi.zeroprompts.com/api/"; // baseurl
+ 
 
-
-
-// showHideAlert === start 
-function showuserdetails()
+// change screen === start 
+function showScreens(val)
 {
-    var storedata = '';
+    // debugger;
+    localStorage.setItem('screen', val);
+    $('.screencontainer').slideUp(300);
+    $("#"+val+"_screen").slideDown(300);
+}
+// change screen === end 
+
+
+
+// logout === start 
+function logout()
+{
+    showScreens('login')
+    localStorage.removeItem('logintoken');
+    $("#logoutButton").hide();
+}
+// logout === end 
+
+
+// set screen === start 
+ function setScreens()
+ {
+    // debugger;
+    $('.screencontainer').slideUp(300);
+
+    if(screenLS == null || screenLS == 'login' || screenLS == 'register')
+    {
+        $("#logoutButton").hide();
+    }
+    else 
+    {
+        $("#logoutButton").show();
+    }
+
+    if(screenLS == null )
+    {
+        $("#login_screen").slideDown(300);
+    }
+    else
+    {
+        $("#"+screenLS+"_screen").slideDown(300);
+        
+        if(screenLS == 'dashboard' &&  localStorage.getItem('logintoken') != null)
+        {
+            showuserdetails(); 
+        }
+    }
+ }
+ setScreens();
+// set screen === end 
+
+
+
+
+
+// registerValidation === start 
+function registerValidation()
+{
+    // debugger;
+    let emailReg = new RegExp('[a-z0-9._-]+@[a-z0-9]+\.[a-z]{2,7}');
+    let adhaarRegex = new RegExp(/^[2-9]{1}[0-9]{11}$/);
+    $(".registerError").hide().html('');
+    if($("#register_mobile").val() == '')
+    {
+        $("#error_register_mobile").show().html('Please enter your mobile number');
+        return false;
+    }
+    else if ($("#register_mobile").val().length !== 10) 
+    {
+        $("#error_register_mobile").show().html('Please enter 10 digit mobile number');
+        return false;
+    }
+    else if (($("#register_mobile").val().indexOf('9')) != 0 && ($("#register_mobile").val().indexOf('8')) != 0 && ($("#register_mobile").val().indexOf('7')) != 0 && ($("#register_mobile").val().indexOf('6')) != 0) 
+    {
+        $("#error_register_mobile").show().html('Mobile number start with digits like 9, 8, 7, 6');
+        return false;
+    }
+    else
+    {
+        $("#register_container_mobile").slideUp(200);
+        $("#register_container_form").slideDown(200);
+        $("#register_container_otp").slideUp(200);
+
+
+        if($("#register_photo").val() == '')
+        {
+            $("#error_register_photo").show().html('Please select profile photo');
+            return false;
+        }
+        else if($("#register_firstname").val() == '')
+        {
+            $("#error_register_firstname").show().html('Please enter your first name');
+            return false;
+        }
+        else if($("#register_lastname").val() == '')
+        {
+            $("#error_register_lastname").show().html('Please enter your last name');
+            return false;
+        }
+        else if($("#register_emailid").val() == '')
+        {
+            $("#error_register_emailid").show().html('Please enter your email address');
+            return false;
+        }
+        else if (!emailReg.test($("#register_emailid").val())) 
+        {
+            $("#error_register_emailid").show().html('Please enter valid email address');
+            return false;
+        }
+        else if($("#register_gender").val() == '' || $("#register_gender").val() == 0)
+        {
+            $("#error_register_gender").show().html('Please select gender');
+            return false;
+        }
+        else if($("#register_city").val() == '')
+        {
+            $("#error_register_city").show().html('Please enter city name');
+            return false;
+        }
+        else if($("#register_aadhaar").val() == '')
+        {
+            $("#error_register_aadhaar").show().html('Please enter aadhaar number');
+            return false;
+        }
+        else if ($("#register_aadhaar").val().length !== 12) 
+        {
+            $("#error_register_aadhaar").show().html('Please enter 12 digit aadhaar number');
+            return false;
+        }
+        else if (!adhaarRegex.test($("#register_aadhaar").val())) 
+        {
+            $("#error_register_aadhaar").show().html('Please enter valid aadhaar number');
+            return false;
+        }
+        else 
+        {
+            $("#register_container_mobile").slideUp(200);
+            $("#register_container_form").slideUp(200);
+            $("#register_container_otp").slideDown(200);
+            if($("#register_otp").val() == '')
+            {
+                $("#error_register_otp").show().html('Please enter OTP');
+                return false;
+            }
+            else if ($("#register_otp").val().length !== 6) 
+            {
+                $("#error_register_otp").show().html('Please enter valid OTP');
+                return false;
+            }
+            else 
+            {
+                $(".registerError").hide().html('');
+                $("#pageloader").fadeIn(300);
+                getRegister();
+                setTimeout(function(){ $(".registerInput, .registerSelect, .registerOtp input[type='text']").val(''); }, 2000);
+                $("#pageloader").fadeOut(300);
+                return true;
+            }
+        }
+    }
+}
+// registerValidation === end 
+ 
+
+
+// profilepicture update === start 
+function profilepicture(val1, val2) 
+{
+    debugger;
+    var fileInput = document.getElementById(val1).files;
+    var fsize = fileInput[0].size;
+    var file = Math.round((fsize / 1024));
+    if (file > 2048) 
+    {  
+        $('#'+val2).show().html("Please select a file less than 2 mb");
+        $("#"+val1).val('');
+    }
+    else 
+    {
+        $('#'+val2).hide().html("");
+    }
+}
+//  profilepicture update === end 
+ 
+ 
+
+
+// loginValidation === start 
+function loginValidation()
+{
+    debugger;
+    $(".registerError").hide().html('');
+    if($("#login_mobile").val() == '')
+    {
+        $("#error_login_mobile").show().html('Please enter mobile number');
+        return false;
+    }
+    else if($("#login_mobile").val().length != 10)
+    {
+        $("#error_login_mobile").show().html('Please enter valid mobile number');
+        return false;
+    }
+    else if (($("#login_mobile").val().indexOf('9')) != 0 && ($("#login_mobile").val().indexOf('8')) != 0 && ($("#login_mobile").val().indexOf('7')) != 0 && ($("#login_mobile").val().indexOf('6')) != 0) 
+    {
+        $("#error_login_mobile").show().html('Mobile number start with digits like 9, 8, 7, 6');
+        return false;
+    }
+    else 
+    { 
+        $("#login_container_mobile").slideUp(200);
+        $("#login_container_otp").slideDown(200);
+        if($("#login_otp").val() == '')
+        {
+            $("#error_login_otp").show().html('Please enter OTP');
+            return false;
+        }
+        else if ($("#login_otp").val().length !== 6) 
+        {
+            $("#error_login_otp").show().html('Please enter valid OTP');
+            return false;
+        }
+        else 
+        {
+            $(".registerError").hide().html('');
+            $("#pageloader").fadeIn(300);
+            getLogin();
+            setTimeout(function() { $(".registerInput, .registerOtp input[type='text']").val(''); }, 2000);
+            $("#pageloader").fadeOut(300);
+            return true;
+        }
+    }
+}
+// loginValidation === end 
+
+
+
+
+// login === start 
+function getLogin()
+{
     var useridLogin = 0;
-    var logintoken = localStorage.getItem('logintoken');
+    var login_mobile = $("#login_mobile").val()
     $.ajax({
         type: "GET",
-        url: baseurl+"Customer/UserInfo?userid=0&phonenumber="+ logintoken,  
+        url: baseurl+"Customer/UserInfo?userid="+useridLogin+"&phonenumber="+ login_mobile,  
         dataType: "json",
         headers : { 'Accept' : 'application/json', "Content-Type" : "application/json" },
         success: function (res) {
-                         console.log("result === ", res);
+                         console.log("Login === ", res);
                         if(res.result_Code == 0)
                         {
-                            storedata += `<h2>${res.result.first_Name}</h2><p>${res.result.phone_Number}</p></div>`;  
-              
-                            
-                            $("#datacontainer").html(storedata);
+                           localStorage.setItem('logintoken', login_mobile)
+                            showScreens('dashboard');
+                            showuserdetails();
+                            $("#logoutButton").show(); 
                         }
                         else
                         {
@@ -407,5 +412,88 @@ function showuserdetails()
             showHideAlert('show', err);
         }
     });
+}
+// login === end 
+ 
+ 
+
+// Register === start 
+function getRegister()
+{
+    var userlist = {
+        first_Name: $("#register_firstname").val(),
+        last_Name: $("#register_lastname").val(),
+        full_Name: $("#register_firstname").val() + ' ' + $("#register_lastname").val(),
+        phone_Number: $("#register_mobile").val(),
+        email_Address: $("#register_emailid").val(),
+        aadhaar_Info: $("#register_adhaarnumber").val(),
+        address_Line1: "Test Address",
+        language_Preference: "English",
+        location_Page: window.location.pathname,
+        iP_Address: getIpAddress,
+        oS_Details: getOs,
+        browser_Details: getBrowser
+    }
+ 
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Customer/SaveUser", 
+            data: JSON.stringify(userlist),
+            headers: { 'Accept' : 'application/json', "Content-Type" : "application/json" },
+            dataType: "json",
+            success: function (res) {
+                         console.log("Register === ", res);
+                        if(res.result_Code == 0)
+                        {
+                            showScreens('registerthank');
+                        }
+                        else
+                        {
+                            showHideAlert('show', res.result_Status);
+                        }
+            },
+            error: function (err) 
+            {
+                showHideAlert('show', err);
+            }
+      });
+}
+// Register === end 
+
+
+
+
+
+
+// showHideAlert === start 
+function showuserdetails()
+{
+    debugger;
+    var storedata = '';
+    var useridLogin = 0;
+    var logintoken = localStorage.getItem('logintoken');
+    $.ajax({
+        type: "GET",
+        url: baseurl+"Customer/UserInfo?userid="+useridLogin+"&phonenumber="+ logintoken,  
+        dataType: "json",
+        headers : { 'Accept' : 'application/json', "Content-Type" : "application/json" },
+        success: function (res) {
+                         console.log("showuserdetails === ", res);
+                        if(res.result_Code == 0)
+                        {
+                            storedata += `<h2>${res.result.first_Name}</h2><p>${res.result.phone_Number}</p></div>`;     
+                            $("#datacontainer").html(storedata); 
+                        }
+                        else
+                        {
+                            showHideAlert('show', res.result_Status);
+                        }
+        },
+        error: function (err) {
+            showHideAlert('show', err);
+        }
+    });
+
 }
 // showHideAlert === end 
