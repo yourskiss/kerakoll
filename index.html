@@ -16,19 +16,31 @@
 
     <link rel="manifest" href="manifest.json" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/slick.css" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 <!-- main start -->
-<main>
+<main id="main">
+    
 
     <!-- header start -->
-    <header class="outer_header">
+    <header class="mainheader" id="mainheader">
         <img class="logo" src="images/logo.png" alt="kerakoll" />
-        <p id="logoutButton"><span onclick="logout();">Logout</span></p>
+        <section>
+            <p><img src="images/QR.png" alt="qr code" /></p>
+            <aside>
+                <img src="images/profile/dp.png" alt="profile" id="header_dp" />
+                <span>12</span>
+            </aside>
+            <ul id="header_menu">
+                <li onclick="logout();" >Logout</li>
+                <li><span id="userfullname"></span></li>
+            </ul>
+        </section>
     </header>
     <!-- header end -->
-
     
 
     <!-- screen start -->
@@ -52,7 +64,7 @@
                             <div><aside>
                                     <input type="text" id="login_otp"  maxlength="6" onkeypress="return isNumber(event)"   />
                             </aside></div>
-                            <span class="registerError registerErrorOtp" id="error_login_otp"></span>
+                            <span class="registerError registerErrorCenter" id="error_login_otp"></span>
                         </div>
                         <div class="registerOtpText">Not reveived?  <span>Resend OTP</span></div>
                     </section>
@@ -63,7 +75,8 @@
                 <div class="registerBottomText">Do not have account <span onclick="showScreens('register');">Sign Up</span></div>
             </section>
             <!-- loginScreen end -->
-            
+
+
             <!-- registerScreen start -->
             <section class="screencontainer" id="register_screen">
                 <div class="registercontainer" id="register_container_mobile">
@@ -75,13 +88,26 @@
                         </div>
                     </section>
                 </div>
+                <div class="registercontainer" id="register_container_otp" style="display: none;">
+                    <section>
+                        <h4 id="register_msg_otp">OTP Sant to your mobile number</h4>
+                        <div class="registerOtp">
+                            <div><aside>
+                                    <input type="text" id="register_otp" maxlength="6" onkeypress="return isNumber(event)"   />
+                            </aside></div>
+                            <span class="registerError registerErrorCenter" id="error_register_otp"></span>
+                        </div>
+                        <div class="registerOtpText">Not reveived?  <span>Resend OTP</span></div>
+                    </section>
+                </div> 
                 <div class="registercontainer" id="register_container_form"  style="display: none;">
                     <section>
                         <div class="registerHead">Setup your profile</div>
                         <div class="registerPhotoField">
-                            <input type="file" id="register_photo" accept=".jpg, .jpeg, .png" onchange="profilepicture('register_photo','error_register_photo');" />
-                            <p>Add Profile Photo</p>
-                            <span class="registerError" id="error_register_photo"></span>
+                            <input type="file" id="register_photo" accept=".jpg, .jpeg, .png" onchange="profilepicture('register_photo','error_register_photo', 'register_photo_name');" />
+                            <label for="register_photo"></label>
+                            <span class="register_photo_name"  id="register_photo_name">Add Profile Photo</span>
+                            <span class="registerError registerErrorCenter" id="error_register_photo"></span>
                         </div>
                         <div class="registerField">
                             <input class="registerInput" type="text" id="register_firstname" placeholder="First Name" onkeypress="return isLetter(event)" maxlength="20" />
@@ -115,23 +141,10 @@
                         </div>
                     </section>
                 </div>
-                <div class="registercontainer" id="register_container_otp" style="display: none;">
-                    <section>
-                        <div class="registerHead">Welcome! Sign Up here</div>
-                        <h4 id="register_msg_otp">OTP Sant to your mobile number</h4>
-                        <div class="registerOtp">
-                            <div><aside>
-                                    <input type="text" id="register_otp" maxlength="6" onkeypress="return isNumber(event)"   />
-                            </aside></div>
-                            <span class="registerError registerErrorOtp" id="error_register_otp"></span>
-                        </div>
-                        <div class="registerOtpText">Not reveived?  <span>Resend OTP</span></div>
-                    </section>
-                </div> 
                 <div class="registerSubmit">
-                    <span class="register_button" onclick="return registerValidation();">Sign Up</span>
+                    <span class="register_button" onclick="return registerValidation();">Sign up!</span>
                 </div>
-                <div class="registerBottomText">Already have an account? <span onclick="showScreens('login');">LOGIN</span></div>
+                <div class="registerBottomText">Already have an account? <span onclick="showScreens('login');">Sign in</span></div>
             </section>
             <!-- registerScreen end -->
 
@@ -139,14 +152,42 @@
  
 
             <!-- thanksScreen start -->
-            <section class="screencontainer" id="registerthank_screen">
-                <div class="registerHead">Registration Successful.</div>
-                <div class="registercontainer">
-                    <section>
-                        <h3>Entra nel mondo Kerakoll Entra nel mondo Kerakoll Entra nel mondo Kerakoll</h3>
-                    </section>
+            <section class="screencontainer" id="registerapproval_screen">
+                <div class="approvalcontainer">
+                        <dl>
+                            <dt>
+                                <aside><img src="" id="register_info_photo" alt="dp" /></aside>
+                            </dt>
+                            <dd>
+                                <p>
+                                    <span id="register_info_name"></span>,<br>
+                                    your request has gone for further approval
+                                </p>
+                            </dd>
+                        </dl>      
+                        <section>
+                            <h2>PRODUCT CATEGORIES</h2>
+                            <h3>We have the right solution for every building-related problem</h3>
+                            <div class="pc_slider">
+                                <div class="pc_item">
+                                    <img src="images/product-categories/pc1.jpg" alt="product" />
+                                    <p>Waterproofing</p>
+                                </div>
+                                <div class="pc_item">
+                                    <img src="images/product-categories/pc2.png" alt="product" />
+                                    <p>Grey-Trowelled</p>
+                                </div>
+                                <div class="pc_item">
+                                    <img src="images/product-categories/pc3.png" alt="product" />
+                                    <p>Certified B Corp</p>
+                                </div>
+                                <div class="pc_item">
+                                    <img src="images/product-categories/pc4.jpg" alt="product" />
+                                    <p>Green Lab</p>
+                                </div>
+                            </div>
+                        </section>
                 </div>
-                <div class="registerBottomText">Click here to <span onclick="showScreens('login');">LOGIN</span></div>
             </section>
             <!-- thanksScreen end -->
 
@@ -154,8 +195,38 @@
 
             <!-- dashboard start -->
             <section class="screencontainer" id="dashboard_screen">
-                <h1>Dashboard</h1>
-                <ul id="datacontainer"></ul>
+                <ul id="datacontainer" style="display: none;"></ul>
+                
+                <div class="dashboard_head">
+                    <h2>
+                        PRODUCT CATEGORIES
+                        <span>Earn reward points everytime you purchase!</span>
+                    </h2>
+                </div>
+
+                <div class="dashboard_single_pro">
+                    <aside>
+                        <img src="images/dashboard_single_pro.png" alt="product" />   
+                    </aside>
+                    <h2>
+                        <span>Learn more</span>
+                        <img src="images/arrows.png" alt="arrows" />
+                    </h2>
+                </div>
+                
+                <div class="dashboard_mid">
+                    <h2>
+                        REWARD KERAKOLL AWARDS
+                        <span>you’ve earned your reward points is</span>
+                    </h2>
+                    <p><span>5000</span><b>pt</b></p>
+                </div>
+
+                <div class="dashboard_double_pro">
+                    <img src="images/dashboard_double_pro2.png" alt="product" />
+                    <img src="images/dashboard_double_pro1.png" alt="product" />
+                </div>
+                
             </section>
             <!-- dashboard end -->
 
@@ -171,13 +242,20 @@
 
 
 
-
-
-<!-- loader start -->
+<!-- pageloader start -->
 <div class="pageloader" id="pageloader">
+    <div><img src="images/logo.png" alt="logo" /></div>
+</div>
+<!-- pageloader end -->
+
+
+<!-- sectionloader start -->
+<div class="sectionloader" id="sectionloader">
     <div></div>
 </div>
-<!-- loader end -->
+<!-- sectionloader end -->
+
+
 
 
 <!-- pwa Prompt  start -->
@@ -186,7 +264,7 @@
         <h2>Install PWA</h2>
         <p>
             <span id="pwaInstall" class="pwaPromptButton" onclick="showHidePwaPrompt('hide');">Install</span>
-            <span id="pwaCancel" class="pwaPromptButton" onclick="showHidePwaPrompt('hide');">cancel</span>
+            <span id="pwaCancel" class="pwaPromptButton" onclick="showHidePwaPrompt('hide');">Cancel</span>
         </p>
     </section>
 </div>
@@ -199,7 +277,7 @@
     <section>
         <h2 id="alertmsg"></h2>
         <p>
-            <span class="pwaPromptButton" onclick="showHideAlert('hide', '');">Close</span>
+            <span class="alertPopupButton" onclick="showHideAlert('hide', '');">Close</span>
         </p>
     </section>
 </div>
@@ -209,6 +287,7 @@
 
 
 <script src="js/jquery-min.js" ></script>
+<script src="js/slick.min.js"></script>
 <script src="js/app.js"></script>
 <script src="js/main.js"></script>
 

@@ -5,6 +5,14 @@ $(window).on('orientationchange', function ()
 });
 // page refresh on orientation change === END 
 
+// page refresh on orientation change === START 
+$(window).on('load', function () 
+{
+    $("#pageloader").fadeOut(500);
+});
+// page refresh on orientation change === END 
+
+
 
 
  
@@ -102,6 +110,34 @@ $(document).on('keyup keypress', 'input[type="text"], input[type="submit"]', fun
       : getBrowser = 'other';
  // get browserName === end 
 
+  
+
+ // show hide menu  === start
+ $("#header_dp").click(function(e)
+ {
+    e.preventDefault();
+    e.stopPropagation();
+    if($(this).hasClass('showhidemenu'))
+    {
+        $(this).removeClass('showhidemenu');
+        $("#header_menu").slideUp(300);
+    }
+    else
+    {
+        $(this).addClass('showhidemenu');
+        $("#header_menu").slideDown(300);
+    }
+});
+$('body').click(function(e) // close on click body
+{    
+        if (e.target != $('#header_dp') || e.target != $('#header_menu') || e.target != $('#header_menu li')) 
+        {
+            $("#header_dp").removeClass("showhidemenu");
+            $("#header_menu").slideUp(500);
+        }
+});
+// show hide menu  === end
+
 
  // show hide Prompt  === start
  function showHidePwaPrompt(val)
@@ -141,6 +177,7 @@ function showHideAlert(val, msg)
 
  
  var screenLS = localStorage.getItem('screen'); // selected screen
+ var logintoken = localStorage.getItem('logintoken'); // selected screen
  var baseurl = "https://kerakollapi.zeroprompts.com/api/"; // baseurl
  
 
@@ -151,6 +188,11 @@ function showScreens(val)
     localStorage.setItem('screen', val);
     $('.screencontainer').slideUp(300);
     $("#"+val+"_screen").slideDown(300);
+
+    if(val == 'registerapproval')
+    {
+        showregisterinfo();
+    }
 }
 // change screen === end 
 
@@ -161,7 +203,9 @@ function logout()
 {
     showScreens('login')
     localStorage.removeItem('logintoken');
-    $("#logoutButton").hide();
+    localStorage.removeItem('registername');
+    localStorage.removeItem('registerphoto');
+    $("#mainheader").removeClass('login');
 }
 // logout === end 
 
@@ -172,13 +216,13 @@ function logout()
     // debugger;
     $('.screencontainer').slideUp(300);
 
-    if(screenLS == null || screenLS == 'login' || screenLS == 'register')
+    if(logintoken == null)
     {
-        $("#logoutButton").hide();
+        $("#mainheader").removeClass('login');
     }
     else 
     {
-        $("#logoutButton").show();
+        $("#mainheader").addClass('login');
     }
 
     if(screenLS == null )
@@ -194,17 +238,57 @@ function logout()
             showuserdetails(); 
         }
     }
+
+    if(screenLS == 'registerapproval')
+    {
+        showregisterinfo();
+    }
  }
  setScreens();
 // set screen === end 
 
 
-
+// profilepicture update === start 
+function profilepicture(val1, val2, val3) 
+{
+    debugger;
+    var fileInput = document.getElementById(val1).files;
+    var fsize = fileInput[0].size;
+    $("#"+val3).text(fileInput[0].name);
+    var file = Math.round((fsize / 1024));
+    if (file > 2048) 
+    {  
+        $("#"+val1).val('');
+        $('#'+val2).show().html("Please select a file less than 2 mb");
+        $("#"+val3).text('Add Profile Photo');
+    }
+    else 
+    {
+        $('#'+val2).hide().html("");
+    }
+}
+//  profilepicture update === end 
 
 
 // registerValidation === start 
 function registerValidation()
 {
+/*
+register_container_mobile
+register_container_form
+register_container_otp
+
+register_mobile error_register_mobile
+register_photo error_register_photo
+register_firstname error_register_firstname
+register_lastname error_register_lastname
+register_emailid error_register_emailid
+register_gender error_register_gender
+register_city error_register_city
+register_aadhaar error_register_aadhaar
+register_otp error_register_otp
+*/
+
     // debugger;
     let emailReg = new RegExp('[a-z0-9._-]+@[a-z0-9]+\.[a-z]{2,7}');
     let adhaarRegex = new RegExp(/^[2-9]{1}[0-9]{11}$/);
@@ -226,83 +310,78 @@ function registerValidation()
     }
     else
     {
-        $("#register_container_mobile").slideUp(200);
-        $("#register_container_form").slideDown(200);
-        $("#register_container_otp").slideUp(200);
-
-
-        if($("#register_photo").val() == '')
+        $("#register_container_otp").slideDown(200);
+        $("#register_mobile").attr('disabled','disabled');
+        if($("#register_otp").val() == '')
         {
-            $("#error_register_photo").show().html('Please select profile photo');
+            $("#error_register_otp").show().html('Please enter OTP');
             return false;
         }
-        else if($("#register_firstname").val() == '')
+        else if ($("#register_otp").val().length !== 6) 
         {
-            $("#error_register_firstname").show().html('Please enter your first name');
-            return false;
-        }
-        else if($("#register_lastname").val() == '')
-        {
-            $("#error_register_lastname").show().html('Please enter your last name');
-            return false;
-        }
-        else if($("#register_emailid").val() == '')
-        {
-            $("#error_register_emailid").show().html('Please enter your email address');
-            return false;
-        }
-        else if (!emailReg.test($("#register_emailid").val())) 
-        {
-            $("#error_register_emailid").show().html('Please enter valid email address');
-            return false;
-        }
-        else if($("#register_gender").val() == '' || $("#register_gender").val() == 0)
-        {
-            $("#error_register_gender").show().html('Please select gender');
-            return false;
-        }
-        else if($("#register_city").val() == '')
-        {
-            $("#error_register_city").show().html('Please enter city name');
-            return false;
-        }
-        else if($("#register_aadhaar").val() == '')
-        {
-            $("#error_register_aadhaar").show().html('Please enter aadhaar number');
-            return false;
-        }
-        else if ($("#register_aadhaar").val().length !== 12) 
-        {
-            $("#error_register_aadhaar").show().html('Please enter 12 digit aadhaar number');
-            return false;
-        }
-        else if (!adhaarRegex.test($("#register_aadhaar").val())) 
-        {
-            $("#error_register_aadhaar").show().html('Please enter valid aadhaar number');
+            $("#error_register_otp").show().html('Please enter valid OTP');
             return false;
         }
         else 
-        {
+        { 
             $("#register_container_mobile").slideUp(200);
-            $("#register_container_form").slideUp(200);
-            $("#register_container_otp").slideDown(200);
-            if($("#register_otp").val() == '')
+            $("#register_container_otp").slideUp(200);
+            $("#register_container_form").slideDown(200);
+            $("#register_otp").attr('disabled','disabled');
+            if($("#register_photo").val() == '')
             {
-                $("#error_register_otp").show().html('Please enter OTP');
+                $("#error_register_photo").show().html('Please select profile photo');
                 return false;
             }
-            else if ($("#register_otp").val().length !== 6) 
+            else if($("#register_firstname").val() == '')
             {
-                $("#error_register_otp").show().html('Please enter valid OTP');
+                $("#error_register_firstname").show().html('Please enter your first name');
+                return false;
+            }
+            else if($("#register_lastname").val() == '')
+            {
+                $("#error_register_lastname").show().html('Please enter your last name');
+                return false;
+            }
+            else if($("#register_emailid").val() == '')
+            {
+                $("#error_register_emailid").show().html('Please enter your email address');
+                return false;
+            }
+            else if (!emailReg.test($("#register_emailid").val())) 
+            {
+                $("#error_register_emailid").show().html('Please enter valid email address');
+                return false;
+            }
+            else if($("#register_gender").val() == '' || $("#register_gender").val() == 0)
+            {
+                $("#error_register_gender").show().html('Please select gender');
+                return false;
+            }
+            else if($("#register_city").val() == '')
+            {
+                $("#error_register_city").show().html('Please enter city name');
+                return false;
+            }
+            else if($("#register_aadhaar").val() == '')
+            {
+                $("#error_register_aadhaar").show().html('Please enter aadhaar number');
+                return false;
+            }
+            else if ($("#register_aadhaar").val().length !== 12) 
+            {
+                $("#error_register_aadhaar").show().html('Please enter 12 digit aadhaar number');
+                return false;
+            }
+            else if (!adhaarRegex.test($("#register_aadhaar").val())) 
+            {
+                $("#error_register_aadhaar").show().html('Please enter valid aadhaar number');
                 return false;
             }
             else 
             {
                 $(".registerError").hide().html('');
-                $("#pageloader").fadeIn(300);
                 getRegister();
-                setTimeout(function(){ $(".registerInput, .registerSelect, .registerOtp input[type='text']").val(''); }, 2000);
-                $("#pageloader").fadeOut(300);
                 return true;
             }
         }
@@ -312,31 +391,19 @@ function registerValidation()
  
 
 
-// profilepicture update === start 
-function profilepicture(val1, val2) 
-{
-    debugger;
-    var fileInput = document.getElementById(val1).files;
-    var fsize = fileInput[0].size;
-    var file = Math.round((fsize / 1024));
-    if (file > 2048) 
-    {  
-        $('#'+val2).show().html("Please select a file less than 2 mb");
-        $("#"+val1).val('');
-    }
-    else 
-    {
-        $('#'+val2).hide().html("");
-    }
-}
-//  profilepicture update === end 
- 
  
 
 
 // loginValidation === start 
 function loginValidation()
 {
+/*
+    login_container_mobile
+    login_container_otp
+
+    login_mobile error_login_mobile
+    login_otp error_login_otp
+*/
     debugger;
     $(".registerError").hide().html('');
     if($("#login_mobile").val() == '')
@@ -356,8 +423,9 @@ function loginValidation()
     }
     else 
     { 
-        $("#login_container_mobile").slideUp(200);
+        // $("#login_container_mobile").slideUp(200);
         $("#login_container_otp").slideDown(200);
+        $("#login_mobile").attr('disabled','disabled');
         if($("#login_otp").val() == '')
         {
             $("#error_login_otp").show().html('Please enter OTP');
@@ -371,10 +439,7 @@ function loginValidation()
         else 
         {
             $(".registerError").hide().html('');
-            $("#pageloader").fadeIn(300);
             getLogin();
-            setTimeout(function() { $(".registerInput, .registerOtp input[type='text']").val(''); }, 2000);
-            $("#pageloader").fadeOut(300);
             return true;
         }
     }
@@ -387,6 +452,7 @@ function loginValidation()
 // login === start 
 function getLogin()
 {
+    $("#sectionloader").fadeIn(300);
     var useridLogin = 0;
     var login_mobile = $("#login_mobile").val()
     $.ajax({
@@ -401,15 +467,23 @@ function getLogin()
                            localStorage.setItem('logintoken', login_mobile)
                             showScreens('dashboard');
                             showuserdetails();
-                            $("#logoutButton").show(); 
+                            $("#mainheader").addClass('login');
+                            setTimeout(function() { 
+                                $(".registerInput, .registerOtp input[type='text']").val(''); 
+                                $("#login_container_mobile").show();
+                                $("#login_container_otp").hide();
+                                $("#login_mobile").attr('disabled','');
+                            }, 1000);
                         }
                         else
                         {
                             showHideAlert('show', res.result_Status);
                         }
+                        $("#sectionloader").fadeOut(300);
         },
         error: function (err) {
             showHideAlert('show', err);
+            $("#sectionloader").fadeOut(300);
         }
     });
 }
@@ -420,13 +494,14 @@ function getLogin()
 // Register === start 
 function getRegister()
 {
+    $("#sectionloader").fadeIn(300);
     var userlist = {
         first_Name: $("#register_firstname").val(),
         last_Name: $("#register_lastname").val(),
         full_Name: $("#register_firstname").val() + ' ' + $("#register_lastname").val(),
         phone_Number: $("#register_mobile").val(),
         email_Address: $("#register_emailid").val(),
-        aadhaar_Info: $("#register_adhaarnumber").val(),
+        aadhaar_Info: $("#register_aadhaar").val(),
         address_Line1: "Test Address",
         language_Preference: "English",
         location_Page: window.location.pathname,
@@ -434,8 +509,6 @@ function getRegister()
         oS_Details: getOs,
         browser_Details: getBrowser
     }
- 
-
         $.ajax({
             type: "POST",
             url: baseurl + "Customer/SaveUser", 
@@ -446,16 +519,30 @@ function getRegister()
                          console.log("Register === ", res);
                         if(res.result_Code == 0)
                         {
-                            showScreens('registerthank');
+                            localStorage.setItem('registername', res.result.full_Name);
+                            localStorage.setItem('registerphoto', 'dp');
+                            showScreens('registerapproval');
+                            
+                            setTimeout(function() { 
+                                $("#register_container_mobile").show();
+                                $("#register_container_form").hide();
+                                $("#register_container_otp").hide();
+                                $(".registerInput, .registerSelect, .registerOtp input[type='text']").val(''); 
+                                $("#register_mobile, #register_otp").attr('disabled','');
+                                $("#register_photo").val('');
+                                $("#register_photo_name").html('Add Profile Photo');
+                            }, 1000);
                         }
                         else
                         {
                             showHideAlert('show', res.result_Status);
                         }
+                        $("#sectionloader").fadeOut(300);
             },
             error: function (err) 
             {
                 showHideAlert('show', err);
+                $("#sectionloader").fadeOut(300);
             }
       });
 }
@@ -465,11 +552,23 @@ function getRegister()
 
 
 
+// show register info === start 
+function showregisterinfo()
+{
+    // debugger;
+    var registerphoto = localStorage.getItem('registerphoto');
+    var registername = localStorage.getItem('registername');
+    $("#register_info_photo").attr("src","images/profile/"+registerphoto+".png")
+    $("#register_info_name").text(registername);
+}
+//  show register info === end 
 
-// showHideAlert === start 
+
+// show user info === start 
 function showuserdetails()
 {
-    debugger;
+    // debugger;
+    $("#sectionloader").fadeIn(300);
     var storedata = '';
     var useridLogin = 0;
     var logintoken = localStorage.getItem('logintoken');
@@ -484,16 +583,38 @@ function showuserdetails()
                         {
                             storedata += `<h2>${res.result.first_Name}</h2><p>${res.result.phone_Number}</p></div>`;     
                             $("#datacontainer").html(storedata); 
+                            $("#userfullname").text(res.result.first_Name);
                         }
                         else
                         {
                             showHideAlert('show', res.result_Status);
                         }
+                        $("#sectionloader").fadeOut(300);
         },
         error: function (err) {
             showHideAlert('show', err);
+            $("#sectionloader").fadeOut(300);
         }
     });
 
 }
-// showHideAlert === end 
+//  show user info === end 
+
+
+
+// slider   === start
+$('.pc_slider').slick({
+            slidesToShow:1,
+            slidesToScroll: 1,
+            dots: true,
+            arrows: false,
+            fade: true,
+            autoplay: true,
+            autoplaySpeed: 4000,
+            infinite: true,
+            adaptiveHeight: false,
+            centerMode: false,
+            centerPadding: '0',
+            initialSlide:0
+}); 
+//  slider   === end  
