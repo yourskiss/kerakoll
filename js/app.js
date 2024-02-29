@@ -8,7 +8,7 @@ $(window).on('orientationchange', function ()
 // page refresh on orientation change === START 
 $(window).on('load', function () 
 {
-    $("#pageloader").fadeOut(500);
+   setTimeout(function(){  $("#pageloader").fadeOut(500); }, 1000);
 });
 // page refresh on orientation change === END 
 
@@ -206,6 +206,7 @@ function logout()
     localStorage.removeItem('registername');
     localStorage.removeItem('registerphoto');
     $("#mainheader").removeClass('login');
+    $("#login_mobile, #register_mobile, #register_otp").prop("disabled", false);
 }
 // logout === end 
 
@@ -248,26 +249,6 @@ function logout()
 // set screen === end 
 
 
-// profilepicture update === start 
-function profilepicture(val1, val2, val3) 
-{
-    debugger;
-    var fileInput = document.getElementById(val1).files;
-    var fsize = fileInput[0].size;
-    $("#"+val3).text(fileInput[0].name);
-    var file = Math.round((fsize / 1024));
-    if (file > 2048) 
-    {  
-        $("#"+val1).val('');
-        $('#'+val2).show().html("Please select a file less than 2 mb");
-        $("#"+val3).text('Add Profile Photo');
-    }
-    else 
-    {
-        $('#'+val2).hide().html("");
-    }
-}
-//  profilepicture update === end 
 
 
 // registerValidation === start 
@@ -311,7 +292,7 @@ register_otp error_register_otp
     else
     {
         $("#register_container_otp").slideDown(200);
-        $("#register_mobile").attr('disabled','disabled');
+        $("#register_mobile").prop("disabled", true);
         if($("#register_otp").val() == '')
         {
             $("#error_register_otp").show().html('Please enter OTP');
@@ -327,12 +308,13 @@ register_otp error_register_otp
             $("#register_container_mobile").slideUp(200);
             $("#register_container_otp").slideUp(200);
             $("#register_container_form").slideDown(200);
-            $("#register_otp").attr('disabled','disabled');
+            $("#register_otp").prop("disabled", true);
+            
             if($("#register_photo").val() == '')
             {
-                $("#error_register_photo").show().html('Please select profile photo');
+                $("#error_register_photo").show().html('Please select profile photo');   
                 return false;
-            }
+            } 
             else if($("#register_firstname").val() == '')
             {
                 $("#error_register_firstname").show().html('Please enter your first name');
@@ -425,7 +407,7 @@ function loginValidation()
     { 
         // $("#login_container_mobile").slideUp(200);
         $("#login_container_otp").slideDown(200);
-        $("#login_mobile").attr('disabled','disabled');
+        $("#login_mobile").prop("disabled", true);
         if($("#login_otp").val() == '')
         {
             $("#error_login_otp").show().html('Please enter OTP');
@@ -472,7 +454,7 @@ function getLogin()
                                 $(".registerInput, .registerOtp input[type='text']").val(''); 
                                 $("#login_container_mobile").show();
                                 $("#login_container_otp").hide();
-                                $("#login_mobile").attr('disabled','');
+                                $("#login_mobile").prop("disabled", false);
                             }, 1000);
                         }
                         else
@@ -489,7 +471,7 @@ function getLogin()
 }
 // login === end 
  
- 
+
 
 // Register === start 
 function getRegister()
@@ -520,7 +502,6 @@ function getRegister()
                         if(res.result_Code == 0)
                         {
                             localStorage.setItem('registername', res.result.full_Name);
-                            localStorage.setItem('registerphoto', 'dp');
                             showScreens('registerapproval');
                             
                             setTimeout(function() { 
@@ -528,7 +509,7 @@ function getRegister()
                                 $("#register_container_form").hide();
                                 $("#register_container_otp").hide();
                                 $(".registerInput, .registerSelect, .registerOtp input[type='text']").val(''); 
-                                $("#register_mobile, #register_otp").attr('disabled','');
+                                $("#register_mobile, #register_otp").prop("disabled", false);
                                 $("#register_photo").val('');
                                 $("#register_photo_name").html('Add Profile Photo');
                             }, 1000);
@@ -556,9 +537,9 @@ function getRegister()
 function showregisterinfo()
 {
     // debugger;
-    var registerphoto = localStorage.getItem('registerphoto');
+    var registerphoto = localStorage.getItem('profilepicture');
     var registername = localStorage.getItem('registername');
-    $("#register_info_photo").attr("src","images/profile/"+registerphoto+".png")
+    $("#register_info_photo").attr("src",registerphoto);
     $("#register_info_name").text(registername);
 }
 //  show register info === end 
@@ -618,3 +599,126 @@ $('.pc_slider').slick({
             initialSlide:0
 }); 
 //  slider   === end  
+
+
+
+
+
+// profilepicture update === start 
+function profilepicture(val1, val2, val3) 
+{
+    debugger;
+    var fileInput = document.getElementById(val1).files;
+    var fsize = fileInput[0].size;
+    $("#"+val3).text(fileInput[0].name);
+    var file = Math.round((fsize / 1024));
+    if (file > 2048) 
+    {  
+        $("#"+val1).val('');
+        $('#'+val2).show().html("Please select a file less than 2 mb");
+        $("#"+val3).text('Add Profile Photo');
+    }
+    else 
+    {
+        $('#'+val2).hide().html("");
+    }
+}
+//  profilepicture update === end 
+
+
+
+	// select file ===== start
+    function cropperjsSelectImg(fileSelectInput) 
+    {
+        if ($("#"+fileSelectInput).val() != '' && parseInt($("#"+fileSelectInput)[0].files[0].size / 1024) > 2048) 
+        {  
+           // console.log(parseInt($("#"+fileSelectInput)[0].files[0].size / 1024));
+            $("#"+fileSelectInput).val('');
+            $("#error_register_photo").show().text("Please select a file less than 2 mb");
+        }
+        else
+        {
+            $("#sectionloader").fadeIn(300);
+            $("#error_register_photo, #register_photo_name").hide()
+            var filedata = $('#'+fileSelectInput).prop('files')[0];
+            $('#cropPopup').fadeIn(300);
+            $('#saveButton_1').show();
+             if ($("#"+fileSelectInput).val() != '') 
+             {
+                const reader = new FileReader();
+                reader.onload = evt => 
+                {
+                    if (evt.target.result) 
+                    {
+                        let img = document.createElement('img');
+                        img.id = 'cropFrame';
+                        img.src = evt.target.result;
+                        $('#cropContainer').html('').append(img);
+                        cropper = new Cropper(img);
+                    }
+                };
+                reader.readAsDataURL(filedata);
+                console.log(filedata);
+                setTimeout(function(){ $("#sectionloader").fadeOut(300); }, 1000); 
+            }
+            
+        }
+	}
+    // select file ===== end
+	 
+	// save on click  ===== start
+	function cropperjsSaveImg() 
+    {
+        let imgSrc = cropper.getCroppedCanvas({ width: 300 }).toDataURL();
+        $('#cropPopup').fadeOut(300);
+        $('#cropContainer').html('');
+        $(".cropSaveButton").hide();
+        $('#outputImg_1').attr('src',imgSrc).show();
+        console.log(imgSrc);
+        localStorage.setItem('profilepicture', imgSrc);
+	}
+    // save on click  ===== end
+
+
+
+
+
+
+//  showhideQrCode === start 
+function showhideQrCode(val)
+{
+    if(val == 'show')
+    {
+        $("#qrscanpopup").fadeIn(300);
+    }
+    else if(val == 'hide')
+    {
+        $("#qrscanpopup").fadeOut(300);
+    }
+    else
+    {
+        // nothing
+    }
+}
+//  showhideQrCode   === end
+
+
+//  qr code impliment === start 
+function domReady(fn) 
+{
+    if (document.readyState === "complete" ||document.readyState === "interactive") { setTimeout(fn, 1000); } 
+    else { document.addEventListener("DOMContentLoaded", fn); }
+}
+domReady(function() 
+{
+    function onScanSuccess(decodeText, decodeResult) 
+    {
+        alert(decodeText, decodeResult);
+    }
+    let htmlscanner = new Html5QrcodeScanner("my-qr-reader",{ fps: 10, qrbos: 250 });
+    htmlscanner.render(onScanSuccess);
+});
+// qr code impliment  === end
+
+
+

@@ -17,14 +17,14 @@
     <link rel="manifest" href="manifest.json" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css">
     <link rel="stylesheet" href="css/slick.css" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 <!-- main start -->
 <main id="main">
-    
-
+ 
     <!-- header start -->
     <header class="mainheader" id="mainheader">
         <img class="logo" src="images/logo.png" alt="kerakoll" />
@@ -102,11 +102,12 @@
                 </div> 
                 <div class="registercontainer" id="register_container_form"  style="display: none;">
                     <section>
+                        
                         <div class="registerHead">Setup your profile</div>
                         <div class="registerPhotoField">
-                            <input type="file" id="register_photo" accept=".jpg, .jpeg, .png" onchange="profilepicture('register_photo','error_register_photo', 'register_photo_name');" />
-                            <label for="register_photo"></label>
-                            <span class="register_photo_name"  id="register_photo_name">Add Profile Photo</span>
+                            <input type="file" id="register_photo" accept=".jpg, .jpeg, .png"  onchange="cropperjsSelectImg(this.id);" />
+                            <label for="register_photo"><img id="outputImg_1" src="" alt="" /></label>
+                            <span class="register_photo_name" id="register_photo_name">Add Profile Photo</span>
                             <span class="registerError registerErrorCenter" id="error_register_photo"></span>
                         </div>
                         <div class="registerField">
@@ -161,10 +162,12 @@
                             <dd>
                                 <p>
                                     <span id="register_info_name"></span>,<br>
-                                    your request has gone for further approval
+                                    your request has gone for further approval.
                                 </p>
                             </dd>
+                            <div class="registerBottomText">Back to <span onclick="showScreens('login');">Sign in</span></div>
                         </dl>      
+                        
                         <section>
                             <h2>PRODUCT CATEGORIES</h2>
                             <h3>We have the right solution for every building-related problem</h3>
@@ -223,8 +226,12 @@
                 </div>
 
                 <div class="dashboard_double_pro">
-                    <img src="images/dashboard_double_pro2.png" alt="product" />
-                    <img src="images/dashboard_double_pro1.png" alt="product" />
+                    <aside>
+                        <img onclick="showhideQrCode('show');" src="images/dashboard_double_pro2.png" alt="product" />
+                    </aside>
+                    <aside>
+                        <img src="images/dashboard_double_pro1.png" alt="product" />
+                    </aside>
                 </div>
                 
             </section>
@@ -285,13 +292,39 @@
 
 
 
+<!-- alertPopup  start -->
+<div class="qrscanpopup" id="qrscanpopup">
+    <section>
+        <aside onclick="showhideQrCode('hide');"><i class="fa fa-times" aria-hidden="true"></i></aside>
+        <div id="my-qr-reader"></div>
+    </section>
+</div>
+<!-- alertPopup end -->
+
+
+
+
+
+<!-- cropPopup  start -->
+<div class="cropPopup" id="cropPopup">
+    <section>
+        <div class="cropContainer" id="cropContainer"></div>
+        <span class="cropSaveButton" id="saveButton_1" onclick="cropperjsSaveImg()">Save</span>
+    </section>
+</div>
+<!-- cropPopup end -->
+
+
+
 
 <script src="js/jquery-min.js" ></script>
 <script src="js/slick.min.js"></script>
 <script src="js/app.js"></script>
 <script src="js/main.js"></script>
 
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>
 
-
+ 
 </body>
 </html>
