@@ -9,6 +9,8 @@ $(window).on('orientationchange', function ()
 $(window).on('load', function () 
 {
    setTimeout(function(){  $("#pageloader").fadeOut(500); }, 1000);
+   setTimeout(function(){ if(sessionStorage.getItem('walkthrough') != 'isactive') { showhidewalkthrough('show'); }  }, 4000);
+   
 });
 // page refresh on orientation change === END 
 
@@ -175,6 +177,28 @@ function showHideAlert(val, msg)
 }
 // showHideAlert === end 
 
+
+// showhide walkthrough   === start
+function showhidewalkthrough(val)
+{
+    if(val == 'show')
+    {
+        sessionStorage.setItem('walkthrough','isactive');
+        $("#walkthrough").fadeIn(300);
+        $(".wt_slider").slick("refresh");
+    }
+    else if(val == 'hide')
+    {
+        $("#walkthrough").fadeOut(300);
+    }
+    else
+    {
+        // nothing
+    }
+}
+// showhide walkthrough    === end  
+ 
+
  
  var screenLS = localStorage.getItem('screen'); // selected screen
  var logintoken = localStorage.getItem('logintoken'); // selected screen
@@ -201,12 +225,12 @@ function showScreens(val)
 // logout === start 
 function logout()
 {
-    showScreens('login')
+    showScreens('login');
     localStorage.removeItem('logintoken');
     localStorage.removeItem('registername');
-    localStorage.removeItem('registerphoto');
+    localStorage.removeItem('profilepicture');
     $("#mainheader").removeClass('login');
-    $("#login_mobile, #register_mobile, #register_otp").prop("disabled", false);
+    $("#login_mobile, #register_mobile").prop("disabled", false);
 }
 // logout === end 
 
@@ -226,7 +250,13 @@ function logout()
         $("#mainheader").addClass('login');
     }
 
-    if(screenLS == null )
+    if(screenLS == null || screenLS == 'login')
+    {
+        localStorage.removeItem('registername');
+        localStorage.removeItem('profilepicture');
+    }
+
+    if(screenLS == null)
     {
         $("#login_screen").slideDown(300);
     }
@@ -234,7 +264,7 @@ function logout()
     {
         $("#"+screenLS+"_screen").slideDown(300);
         
-        if(screenLS == 'dashboard' &&  localStorage.getItem('logintoken') != null)
+        if(screenLS == 'dashboard' &&  logintoken != null)
         {
             showuserdetails(); 
         }
@@ -268,6 +298,9 @@ register_gender error_register_gender
 register_city error_register_city
 register_aadhaar error_register_aadhaar
 register_otp error_register_otp
+
+
+
 */
 
     // debugger;
@@ -291,22 +324,7 @@ register_otp error_register_otp
     }
     else
     {
-        $("#register_container_otp").slideDown(200);
-        $("#register_mobile").prop("disabled", true);
-        if($("#register_otp").val() == '')
-        {
-            $("#error_register_otp").show().html('Please enter OTP');
-            return false;
-        }
-        else if ($("#register_otp").val().length !== 6) 
-        {
-            $("#error_register_otp").show().html('Please enter valid OTP');
-            return false;
-        }
-        else 
-        { 
             $("#register_container_mobile").slideUp(200);
-            $("#register_container_otp").slideUp(200);
             $("#register_container_form").slideDown(200);
             $("#register_otp").prop("disabled", true);
             
@@ -366,7 +384,6 @@ register_otp error_register_otp
                 getRegister();
                 return true;
             }
-        }
     }
 }
 // registerValidation === end 
@@ -476,15 +493,44 @@ function getLogin()
 // Register === start 
 function getRegister()
 {
+/*
+  "first_Name": "string",
+  "last_Name": "string",
+  "full_Name": "string",
+  "gender": "string",
+  "phone_Number": "string",
+  "email_Address": "string",
+  "aadhaar_Info": "string",
+  "address_Line1": "string",
+  "city": "string",
+  "state": "string",
+  "country": "string",
+  "postal_Code": "string",
+  "profile_Picture_URL": "string",
+  "date_Of_Birth": "string",
+  "language_Preference": "string",
+  "location_Page": "string",
+  "iP_Address": "string",
+  "oS_Details": "string",
+  "browser_Details": "string"
+*/
+
     $("#sectionloader").fadeIn(300);
     var userlist = {
         first_Name: $("#register_firstname").val(),
         last_Name: $("#register_lastname").val(),
         full_Name: $("#register_firstname").val() + ' ' + $("#register_lastname").val(),
+        gender: $("#register_gender").val(),
         phone_Number: $("#register_mobile").val(),
         email_Address: $("#register_emailid").val(),
         aadhaar_Info: $("#register_aadhaar").val(),
-        address_Line1: "Test Address",
+        address_Line1: "string",
+        city: "string",
+        state: "string",
+        country: "string",
+        postal_Code: "string",
+        profile_Picture_URL: localStorage.getItem('profilepicture'),
+        date_Of_Birth: "string",
         language_Preference: "English",
         location_Page: window.location.pathname,
         iP_Address: getIpAddress,
@@ -507,11 +553,10 @@ function getRegister()
                             setTimeout(function() { 
                                 $("#register_container_mobile").show();
                                 $("#register_container_form").hide();
-                                $("#register_container_otp").hide();
-                                $(".registerInput, .registerSelect, .registerOtp input[type='text']").val(''); 
-                                $("#register_mobile, #register_otp").prop("disabled", false);
+                                $(".registerInput, .registerSelect").val(''); 
+                                $("#register_mobile").prop("disabled", false);
                                 $("#register_photo").val('');
-                                $("#register_photo_name").html('Add Profile Photo');
+                              //  $("#register_photo_name").show();
                             }, 1000);
                         }
                         else
@@ -583,7 +628,7 @@ function showuserdetails()
 
 
 
-// slider   === start
+// product cateloges slider   === start
 $('.pc_slider').slick({
             slidesToShow:1,
             slidesToScroll: 1,
@@ -598,7 +643,24 @@ $('.pc_slider').slick({
             centerPadding: '0',
             initialSlide:0
 }); 
-//  slider   === end  
+// product cateloges  slider   === end  
+
+// walkthrough slider   === start
+$('.wt_slider').slick({
+    slidesToShow:1,
+    slidesToScroll: 1,
+    dots: true,
+    arrows: false,
+    fade: true,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    infinite: true,
+    adaptiveHeight: false,
+    centerMode: false,
+    centerPadding: '0',
+    initialSlide:0
+}); 
+// walkthrough slider   === end  
 
 
 
@@ -639,7 +701,8 @@ function profilepicture(val1, val2, val3)
         else
         {
             $("#sectionloader").fadeIn(300);
-            $("#error_register_photo, #register_photo_name").hide()
+            $("#error_register_photo").hide();
+           // $("#register_photo_name").hide()
             var filedata = $('#'+fileSelectInput).prop('files')[0];
             $('#cropPopup').fadeIn(300);
             $('#saveButton_1').show();
