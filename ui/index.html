@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    
+    <link rel="icon" href="images/favicon.png" />
+    <link rel="apple-touch-icon" href="images/favicon.png" />
+    <meta name="apple-mobile-web-app-status-bar" content="#db4938" />
+    <meta name="theme-color" content="#db4938" />
+    
+
+    <title>kerakoll.com</title>
+
+    <link rel="manifest" href="manifest.json" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css">
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<!-- main start -->
+<main id="main">
+ 
+    <!-- header start -->
+    <header class="mainheader" id="mainheader">
+        <img class="logo" src="images/logo.png" alt="kerakoll" />
+        <section>
+            <p><img src="images/QR.png" alt="qr code" /></p>
+            <aside>
+                <img src="images/profile/dp.png" alt="profile" id="header_dp" />
+                <span>12</span>
+            </aside>
+            <ul id="header_menu">
+                <li onclick="logout();" >Logout</li>
+                <li><span id="userfullname"></span></li>
+            </ul>
+        </section>
+    </header>
+    <!-- header end -->
+    
+
+    <!-- screen start -->
+    <section class="screenmain" > 
+ 
+            <!-- loginScreen start -->
+            <section class="screencontainer" id="login_screen">
+                <div class="registerHead">Welcome! Sign in here</div>
+                <div class="registercontainer" id="login_container_mobile">
+                    <section>
+                        <div class="registerField">
+                            <input class="registerInput" type="text" id="login_mobile" placeholder="Mobile number"  onkeypress="return isNumber(event)"  maxlength="10"  />
+                            <span class="registerError" id="error_login_mobile"></span>
+                        </div>
+                    </section>
+                </div>
+                <div class="registercontainer" id="login_container_otp" style="display: none;">
+                    <section>
+                        <h4 id="login_msg_otp">OTP Sant to your mobile number</h4>
+                        <div class="registerOtp">
+                            <div><aside>
+                                    <input type="text" id="login_otp"  maxlength="6" onkeypress="return isNumber(event)"   />
+                            </aside></div>
+                            <span class="registerError registerErrorCenter" id="error_login_otp"></span>
+                        </div>
+                        <div class="registerOtpText">Not reveived?  <span>Resend OTP</span></div>
+                    </section>
+                </div>
+                <div class="registerSubmit">
+                    <span class="register_button" onclick="return loginValidation();">Sign In</span>
+                </div>
+                <div class="registerBottomText">Do not have account <span onclick="showScreens('register');">Sign Up</span></div>
+            </section>
+            <!-- loginScreen end -->
+
+
+            <!-- registerScreen start -->
+            <section class="screencontainer" id="register_screen">
+                <div class="registercontainer" id="register_container_mobile">
+                    <div class="registerHead">Welcome! Sign Up here</div>
+                    <section>
+                        <div class="registerField">
+                            <input class="registerInput" type="text" id="register_mobile" placeholder="Mobile number"  onkeypress="return isNumber(event)"  maxlength="10"  />
+                            <span class="registerError" id="error_register_mobile"></span>
+                        </div>
+                    </section>
+                </div>
+                <div class="registercontainer" id="register_container_otp" style="display: none;">
+                    <section>
+                        <h4 id="register_msg_otp">OTP Sant to your mobile number</h4>
+                        <div class="registerOtp">
+                            <div><aside>
+                                    <input type="text" id="register_otp" maxlength="6" onkeypress="return isNumber(event)"   />
+                            </aside></div>
+                            <span class="registerError registerErrorCenter" id="error_register_otp"></span>
+                        </div>
+                        <div class="registerOtpText">Not reveived?  <span>Resend OTP</span></div>
+                    </section>
+                </div> 
+                <div class="registercontainer" id="register_container_form"  style="display: none;">
+                    <section>
+                        
+                        <div class="registerHead">Setup your profile</div>
+                        <div class="registerPhotoField">
+                            <input type="file" id="register_photo" accept=".jpg, .jpeg, .png"  onchange="cropperjsSelectImg(this.id);" />
+                            <label for="register_photo"><img id="outputImg_1" src="" alt="" /></label>
+                            <span class="register_photo_name" id="register_photo_name">Add Profile Photo</span>
+                            <span class="registerError registerErrorCenter" id="error_register_photo"></span>
+                        </div>
+                        <div class="registerField">
+                            <input class="registerInput" type="text" id="register_firstname" placeholder="First Name" onkeypress="return isLetter(event)" maxlength="20" />
+                            <span class="registerError" id="error_register_firstname"></span>
+                        </div>
+                        <div class="registerField">
+                            <input class="registerInput" type="text" id="register_lastname" placeholder="Last Name" onkeypress="return isLetter(event)" maxlength="20" />
+                            <span class="registerError" id="error_register_lastname"></span>
+                        </div>
+                        <div class="registerField">
+                            <input class="registerInput" type="text" id="register_emailid" placeholder="Email ID"  maxlength="50"  />
+                            <span class="registerError" id="error_register_emailid"></span>
+                        </div>
+                        <div class="registerField">
+                            <select class="registerSelect" id="register_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <span class="registerError" id="error_register_gender"></span>
+                        </div>
+                        <div class="registerField">
+                            <input class="registerInput" type="text" id="register_city" placeholder="City" onkeypress="return isLetter(event)"  maxlength="25"  />
+                            <p>Enter nearby city name</p>
+                            <span class="registerError" id="error_register_city"></span>
+                        </div>
+                        <div class="registerField">
+                            <input class="registerInput" type="text" id="register_aadhaar" placeholder="Aadhaar Number:" onkeypress="return isNumber(event)"  maxlength="12"  />
+                            <p>Profile details should match with Aadhaar</p>
+                            <span class="registerError" id="error_register_aadhaar"></span>
+                        </div>
+                    </section>
+                </div>
+                <div class="registerSubmit">
+                    <span class="register_button" onclick="return registerValidation();">Sign up!</span>
+                </div>
+                <div class="registerBottomText">Already have an account? <span onclick="showScreens('login');">Sign in</span></div>
+            </section>
+            <!-- registerScreen end -->
+
+
+ 
+
+            <!-- thanksScreen start -->
+            <section class="screencontainer" id="registerapproval_screen">
+                <div class="approvalcontainer">
+                        <dl>
+                            <dt>
+                                <aside><img src="" id="register_info_photo" alt="dp" /></aside>
+                            </dt>
+                            <dd>
+                                <p>
+                                    <span id="register_info_name"></span>,<br>
+                                    your request has gone for further approval.
+                                </p>
+                            </dd>
+                            <div class="registerBottomText">Back to <span onclick="showScreens('login');">Sign in</span></div>
+                        </dl>      
+                        
+                        <section>
+                            <h2>PRODUCT CATEGORIES</h2>
+                            <h3>We have the right solution for every building-related problem</h3>
+                            <div class="pc_slider">
+                                <div class="pc_item">
+                                    <img src="images/product-categories/pc1.jpg" alt="product" />
+                                    <p>Waterproofing</p>
+                                </div>
+                                <div class="pc_item">
+                                    <img src="images/product-categories/pc2.png" alt="product" />
+                                    <p>Grey-Trowelled</p>
+                                </div>
+                                <div class="pc_item">
+                                    <img src="images/product-categories/pc3.png" alt="product" />
+                                    <p>Certified B Corp</p>
+                                </div>
+                                <div class="pc_item">
+                                    <img src="images/product-categories/pc4.jpg" alt="product" />
+                                    <p>Green Lab</p>
+                                </div>
+                            </div>
+                        </section>
+                </div>
+            </section>
+            <!-- thanksScreen end -->
+
+
+
+            <!-- dashboard start -->
+            <section class="screencontainer" id="dashboard_screen">
+                <ul id="datacontainer" style="display: none;"></ul>
+                
+                <div class="dashboard_head">
+                    <h2>
+                        PRODUCT CATEGORIES
+                        <span>Earn reward points everytime you purchase!</span>
+                    </h2>
+                </div>
+
+                <div class="dashboard_single_pro">
+                    <aside>
+                        <img src="images/dashboard_single_pro.png" alt="product" />   
+                    </aside>
+                    <h2>
+                        <span>Learn more</span>
+                        <img src="images/arrows.png" alt="arrows" />
+                    </h2>
+                </div>
+                
+                <div class="dashboard_mid">
+                    <h2>
+                        REWARD KERAKOLL AWARDS
+                        <span>you’ve earned your reward points is</span>
+                    </h2>
+                    <p><span>5000</span><b>pt</b></p>
+                </div>
+
+                <div class="dashboard_double_pro">
+                    <aside>
+                        <img onclick="showhideQrCode('show');" src="images/dashboard_double_pro2.png" alt="product" />
+                    </aside>
+                    <aside>
+                        <img src="images/dashboard_double_pro1.png" alt="product" />
+                    </aside>
+                </div>
+                
+            </section>
+            <!-- dashboard end -->
+
+ 
+
+
+    </section>
+    <!-- screen end -->
+
+</main>
+<!-- main end -->
+ 
+
+
+
+
+
+
+<!-- sectionloader start -->
+<div class="sectionloader" id="sectionloader">
+    <div></div>
+</div>
+<!-- sectionloader end -->
+
+
+<!-- pageloader start -->
+<div class="pageloader" id="pageloader">
+    <div><img src="images/logo.png" alt="logo" /></div>
+</div>
+<!-- pageloader end -->
+
+
+<!-- walkthrough start -->
+<div class="walkthrough" id="walkthrough">
+    <section>
+        <div class="wt_slider">
+            <div class="wt_item">
+                <img src="images/product-categories/pc1.jpg" alt="product" />
+            </div>
+            <div class="wt_item">
+                <img src="images/product-categories/pc2.png" alt="product" />
+            </div>
+            <div class="wt_item">
+                <img src="images/product-categories/pc3.png" alt="product" />
+            </div>
+            <div class="wt_item">
+                <img src="images/product-categories/pc4.jpg" alt="product" />
+            </div>
+        </div>
+        <h2>lorem ipsum dolor sit amet</h2>
+        <h3>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h3>
+        
+    </section>
+    <aside onclick="showhidewalkthrough('hide');">Skip</aside>
+</div>
+<!-- walkthrough end -->
+
+
+
+
+<!-- pwa Prompt  start -->
+<div class="pwaPromptPopup" id="pwaPrompt">
+    <section>
+        <h2>Install PWA</h2>
+        <p>
+            <span id="pwaInstall" class="pwaPromptButton" onclick="showHidePwaPrompt('hide');">Install</span>
+            <span id="pwaCancel" class="pwaPromptButton" onclick="showHidePwaPrompt('hide');">Cancel</span>
+        </p>
+    </section>
+</div>
+<!-- pwa Prompt start -->
+ 
+
+
+<!-- alertPopup  start -->
+<div class="alertPopup" id="alertPopup">
+    <section>
+        <h2 id="alertmsg"></h2>
+        <p>
+            <span class="alertPopupButton" onclick="showHideAlert('hide', '');">Close</span>
+        </p>
+    </section>
+</div>
+<!-- alertPopup end -->
+
+
+
+<!-- alertPopup  start -->
+<div class="qrscanpopup" id="qrscanpopup">
+    <section>
+        <aside onclick="showhideQrCode('hide');"><i class="fa fa-times" aria-hidden="true"></i></aside>
+        <div id="my-qr-reader"></div>
+    </section>
+</div>
+<!-- alertPopup end -->
+
+
+
+
+
+<!-- cropPopup  start -->
+<div class="cropPopup" id="cropPopup">
+    <section>
+        <div class="cropContainer" id="cropContainer"></div>
+        <span class="cropSaveButton" id="saveButton_1" onclick="cropperjsSaveImg()">Save</span>
+    </section>
+</div>
+<!-- cropPopup end -->
+
+
+
+
+<script src="js/jquery-min.js" ></script>
+<script src="js/slick.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/main.js"></script>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>
+
+ 
+</body>
+</html>

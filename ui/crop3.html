@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="author" content="CodePel">
+      <title> Upload crop & save Example </title>
+      <!-- Style CSS -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css">
+
+<style>
+	.result {   max-width: 400px; max-height: 400px; background-color: #f30; }
+    .cropped { display: none; width: auto; border: solid 2px #000; }
+    .saveButton { display: none; }
+</style>
+   </head>
+   <body> 
+ 
+<input type="file" id="fileInput_2" onchange="cropperjsSelectImg('fileInput_2', 'saveButton_2')">
+<img class="cropped" id="outputImg_2" src="" alt="">
+ 
+<input type="file" id="fileInput_1" onchange="cropperjsSelectImg('fileInput_1', 'saveButton_1')">
+<img class="cropped" id="outputImg_1" src="" alt="">
+
+
+
+        <div class="cropPopup" id="cropPopup">
+            <div class="result" id="cropContainer"></div>
+            <span class="saveButton" id="saveButton_2" onclick="cropperjsSaveImg('saveButton_2', 'outputImg_2')">Save</span>
+            <span class="saveButton" id="saveButton_1" onclick="cropperjsSaveImg('saveButton_1', 'outputImg_1')">Save</span>
+        </div>
+
+
+
+
+<script src="js/jquery-min.js" ></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js'></script>
+<script>
+ 
+	// select file ===== start
+	function cropperjsSelectImg(fileSelectInput, saveButton) 
+    {
+        var filedata = $('#'+fileSelectInput).prop('files')[0];
+        $('#cropPopup').fadeIn(300);
+        $('#'+saveButton).show();
+         if ($("#"+fileSelectInput).val() != '') 
+         {
+            const reader = new FileReader();
+            reader.onload = evt => 
+            {
+                if (evt.target.result) 
+                {
+                    let img = document.createElement('img');
+                    img.id = 'cropFrame';
+                    img.src = evt.target.result;
+                    $('#cropContainer').html('').append(img);
+                    cropper = new Cropper(img);
+                }
+            };
+            reader.readAsDataURL(filedata);
+            console.log(filedata);
+            
+        }
+	}
+    // select file ===== end
+	 
+	// save on click  ===== start
+	function cropperjsSaveImg(saveButton, outputImg) 
+    {
+        let imgSrc = cropper.getCroppedCanvas({ width: 300 }).toDataURL();
+        $('#cropPopup').fadeOut(300);
+        $('#cropContainer').html('');
+        $(".saveButton").hide();
+        $('#'+outputImg).attr('src',imgSrc).show();
+        console.log(imgSrc);
+	}
+    // save on click  ===== end
+	</script>
+
+
+
+</body>
+</html>
