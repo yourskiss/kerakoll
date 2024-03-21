@@ -6,8 +6,7 @@ import HeaderComponent from "../shared/HeaderComponent";
 import Loader from "../shared/LoaderComponent";
 import { appconfig } from "@/config/config";
 import {  setBearerToken } from "@/config/beararauth";
-import { isUserToken, isValideUser, getUserToken } from "@/config/userauth";
-import { decryptText } from "@/config/crypto";
+import { getUserID, getUserMobile, isUserToken, isValideUser, getUserToken } from "@/config/userauth";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ImageCropperWithPreview from "../core/ImageCropperWithPreview";
@@ -19,9 +18,9 @@ export default function UpdateprofileComponent() {
     const getUT = getUserToken() || '';
     const isUT = isUserToken();
     const isUser = isValideUser();
+    const userID = getUserID();
+    const userMobile = getUserMobile();
     
-    const decryptUserToken = decryptText(getUT);
-    const userMobile = decryptUserToken.split("|")[1]; 
 
     const [userdata, setUserdata] = useState({});
     const [stateList, setStateList] = useState([]);
@@ -81,8 +80,8 @@ export default function UpdateprofileComponent() {
      
     
         axios({
-            url: appconfig.baseurl + "Customer/UserInfo?userid=1&phonenumber="+ userMobile,
-            method: "PUT",
+            url: appconfig.baseurl + "Customer/SaveUser",
+            method: "POST",
             headers: { 'authorization': 'Bearer '+ setBT  },
             data: userdata,
         }).then((res) => {

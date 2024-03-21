@@ -7,6 +7,7 @@ import { getUserID, isUserToken, isValideUser } from "@/config/userauth";
 import { appconfig } from "@/config/config";
 import { setBearerToken } from '@/config/beararauth';
 import Loader from "../shared/LoaderComponent";
+import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 
 export default function RewardshistoryComponent () {
   const [loading, setLoading] = useState(false);
@@ -45,17 +46,31 @@ export default function RewardshistoryComponent () {
 
   }, [isUT]);
 
-
+ const points = TotalrewardpointsComponent();
   return (
   <>
     <HeaderComponent />
     <div className="screenmain" > 
       <div className="screencontainer">
-        <h1>Reward Points History</h1>
-        { nodata && <h2>{nodata}</h2> }
-        <ul>
-        {  pointhistory &&  pointhistory.map &&  pointhistory.map((val) => <li key={val.pointid}>{val.couponcode} -  { val.scandate } - { val.earnedpoints }</li>) }
-        </ul>  
+ 
+
+
+          <div className="rewardscontainer">
+            <h2>Reward Points History</h2>
+            <h3>(Total Rewards <span>{points}</span> <b>pt</b>)</h3>
+            { nodata ? <div className="norewardsavailable">{nodata}</div> : (
+            <ul>
+              <li>
+                <p><b>SN.</b></p>
+                <p><b>Coupon Code</b></p>
+                <p><b>Scan Datetime</b></p>
+                <p><b>Earned Points</b></p>
+              </li>
+              {  pointhistory.map &&  pointhistory.map((val, index) => <li key={val.pointid}><p>{index+1}</p><p>{val.couponcode}</p><p>{ val.scandate }</p><p>{ val.earnedpoints }</p></li>) }
+            </ul> 
+            )}
+          </div>
+ 
       </div>
     </div> 
 

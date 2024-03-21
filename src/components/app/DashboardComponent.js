@@ -10,7 +10,7 @@ import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 const DashboardComponent = () => {
   const { push } = useRouter();
   const isUT = isUserToken();
- 
+  const rewardspoints = TotalrewardpointsComponent();
  
  
   useEffect(() => {
@@ -42,7 +42,14 @@ const DashboardComponent = () => {
               </h2>
           </div>
 
-            <TotalrewardpointsComponent />
+ 
+          <div className="dashboard_mid">
+              <h2>
+                  REWARD KERAKOLL AWARDS
+                  <span>you’ve earned your reward points is</span>
+              </h2>
+              <p><span>{rewardspoints}</span><b>pt</b></p>
+          </div>
 
           <div className="dashboard_double_pro">
               <aside>

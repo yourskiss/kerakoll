@@ -213,12 +213,38 @@ body { background-color: #fff; margin:0;padding:0;box-sizing:border-box;line-hei
 
 
 /* ################### qr code reader ################### */
-.qr-reader { z-index: 2; width: 100%; max-width: 1024px; /* height: calc(100% - 160px); */ height: 100vh; background-color: #afcdaf; margin: 0 auto; position: fixed; left: 50%;  bottom:0; transform: translateX(-50%); }
+.qr-reader { z-index: 2; width: 100%; max-width: 1024px; height: calc(100% - 160px); background-color: #afcdaf; margin: 0 auto; position: fixed; left: 50%;  bottom:0; transform: translateX(-50%); }
 .qr-reader video { width: 100%;  height: 100%;  object-fit: cover;}
 .qr-reader section {  width: 100% !important;  left: 0 !important; float: left; }
 .qr-reader .qr-frame {  z-index: 3; position: absolute; left: 50%;  top: 50%;  transform: translate(-50%, -50%);}
 
+/* ################### qr container ################### */
+.scanqrcodecontainer  { width: 100%; float: left; margin:1rem 0; padding: 0; }
+.scanqrcodecontainer h2 { width: 100%; float: left; margin:0; padding:0; text-align: center;  font-weight: bold; color: #414141; font-size:24px;   }
+.scanqrcodecontainer h2 span { margin-top: 0.3rem; display: block; font-weight: normal; color: #919191; font-size:16px;    }
+.scanqrcodecontainer ul { width: 100%; float: left; margin:1rem 0 2rem 0; padding:0; display: flex; justify-content: center; align-items: stretch; flex-wrap: wrap;  }
+.scanqrcodecontainer ul li { list-style: none; width: 50%; float: left; margin:0; box-sizing: border-box; text-align: center; border: solid 1px #eee; background: #fff;padding: 1rem; font-weight: 500; color: #414141; font-size:16px;  }
+.scanqrcodeForm { display: flex; justify-content: center; align-items: flex-start; flex-direction: column; width: 90%; max-width: 500px; float: none; margin:0 auto; padding:0; box-sizing: border-box; }
+.scanqrcodeForm button { display: inline-block; width:auto;  float: none; margin:0 auto;  padding:0.8rem 1.5rem;  box-sizing: border-box; background-color: #afcdaf; border: none; text-align: center; font-weight: 500; color: #414141; font-size:16px; } 
+.scanqrcodeForm button:hover { background-color: #414141; color: #fff; }
 
+/* ################### rewardscontainer ################### */
+.rewardscontainer { width: 100%; float: left; margin:2rem 0 0 0; padding: 0; }
+.rewardscontainer h2 { width: 100%; float: left; margin:0; padding:0; text-align: center;  font-weight: bold; color: #414141; font-size:24px;   }
+.rewardscontainer h3 { width: 100%; float: left; margin:0; padding:0.5rem 0 1.5rem 0; text-align: center;  font-weight: 500; color: #949494; font-size:16px;   }
+.rewardscontainer h3 span {  font-weight: bold; color: #afcdaf; }
+.rewardscontainer ul { width: 100%; float: left; margin:0; padding:0;  }
+.rewardscontainer ul li { list-style: none; width: 100%; float: left; margin:0; box-sizing: border-box; display: flex; justify-content:flex-start; align-items: center; }
+.rewardscontainer ul li:nth-child(odd) { background-color: #dfdfdf; }
+.rewardscontainer ul li:nth-child(even) { background-color: #fff; }
+.rewardscontainer ul li:first-child { background-color: #afcdaf; }
+.rewardscontainer ul li p {  float: left; margin:0; padding:0;  padding:0.5rem; box-sizing: border-box; text-align: center; font-weight: 500; color: #414141; font-size:14px; }
+.rewardscontainer ul li p:first-child { width: 15%; }
+.rewardscontainer ul li p:nth-of-type(2) { width: 30%; }
+.rewardscontainer ul li p:nth-of-type(3) { width: 35%; }
+.rewardscontainer ul li p:last-child { width: 20%; }
+.rewardscontainer ul li p b { color: #000;  }
+.rewardscontainer .norewardsavailable { width: 100%; float: left; margin:0; padding:2rem 0; text-align: center;  font-weight: 500;color: #D40000; font-size: 30px;   }
 
 
 @media only screen and (max-width:1023px)
@@ -245,7 +271,7 @@ body { background-color: #fff; margin:0;padding:0;box-sizing:border-box;line-hei
 
 
 /* ################### qr code reader ################### */
-/* .qr-reader {  height: calc(100% - 120px); } */
+.qr-reader {  height: calc(100% - 120px); } 
 
 }
 @media only screen and (min-device-width:500px) and (max-device-width:1000px) and (orientation:landscape)

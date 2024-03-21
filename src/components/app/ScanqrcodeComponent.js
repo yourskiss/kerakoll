@@ -8,10 +8,9 @@ import { appconfig } from "@/config/config";
 import { getUserID, isUserToken, isValideUser } from "@/config/userauth";
 import { setBearerToken } from "@/config/beararauth";
 import Loader from "../shared/LoaderComponent";
-import { ipaddress, osdetails, browserdetails, geolocation } from "../core/jio";
+import { ipaddress, osdetails, browserdetails, geoLatitude, geoLongitude } from "../core/jio";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 
 export default function ScanqrcodeComponent() {
   const [loading, setLoading] = useState(false);
@@ -23,21 +22,21 @@ export default function ScanqrcodeComponent() {
   const isUT = isUserToken();
   const isUser = isValideUser();
   const userID = getUserID();
-   
-  const geoInfo = geolocation();
+  const latInfo = geoLatitude();
+  const lonInfo = geoLongitude();
   const ipInfo = ipaddress();
   const osInfo = osdetails();
   const browserInfo = browserdetails();
 
-  
+  const couponURL = "http://localhost:62819/coupon.aspx";
  
   useEffect(() => {
     if(!isUT) { push("/"); return  }
   }, [isUT]);
 
   useEffect(() => {
-      const sdURL = scandata.split("?");
-      if(sdURL[0] === 'http://localhost:62819/coupon.aspx')
+      const sdURL = scandata.split("?") || '';
+      if(sdURL[0] === couponURL)
       {
           const couponvalue = sdURL[1].split("=");
           setCouponecode(couponvalue[1]);
@@ -52,9 +51,6 @@ export default function ScanqrcodeComponent() {
     setScandata(val);
   }
  
-
-
-  
   const handleSubmitCode = (e) => 
   {
     e.preventDefault();
@@ -62,27 +58,33 @@ export default function ScanqrcodeComponent() {
     const qrdata = {
       userid: userID,
       couponcode: couponecode,
-      scanlocation: geoInfo,
+      scanlocation: latInfo + " " + lonInfo,
       ipaddress: ipInfo,
       osdetails: osInfo,
       browserdetails: browserInfo
     }
-     console.log(qrdata);
-    
-    axios({
+    console.log(qrdata);
+    if(couponecode !== '')
+    {
+        axios({
           url: appconfig.baseurl + "Customer/ValidateCouponAndSave",
           method: "POST",
           headers: { 'authorization': 'Bearer '+ setBT  },
           data: qrdata,
-      }).then((res) => {
-        setLoading(false);
-        console.log(res)
-        res.data.result === null ? toast.error(res.data.resultmessage) : push("/rewards");
-      }).catch((err) => {
-        setLoading(false); 
-        toast.error(err.message);
-      });
-      
+        }).then((res) => {
+          setLoading(false);
+          console.log(res)
+          res.data.result === null ? toast.error(res.data.resultmessage) : push("/rewards");
+        }).catch((err) => {
+          setLoading(false); 
+          toast.error(err.message);
+        });
+    }
+    else
+    {
+        toast.error("Invalide Coupon");
+    }
+
   }
 
   return (
@@ -90,22 +92,27 @@ export default function ScanqrcodeComponent() {
       <HeaderComponent />
       <div className="screenmain" > 
         <div className="screencontainer">
-          <p>
-            scan data  - { scandata } <br />          
-            code  - { couponecode } <br />              
-            geoInfo  -  { geoInfo } <br />  
-            ipInfo  -  { ipInfo } <br />  
-            osInfo  -  { osInfo } <br />  
-            browserInfo  -  { browserInfo } <br />  
-          </p>
-          <form onSubmit={handleSubmitCode}>
-            <button>Submit</button>
+
+          <div className="scanqrcodecontainer">
+            <h2>Scan Data  <span>({scandata})</span> </h2>
+            <ul>
+              <li>Latitude: {latInfo}</li>
+              <li>Longitude: {lonInfo}</li>
+              <li>IP Address: {ipInfo}</li>
+              <li>OS Details: {osInfo}</li>
+              <li>Browser Details: {browserInfo}</li>
+              <li>Coupone Code: {couponecode}</li>
+            </ul>
+            <form onSubmit={handleSubmitCode} className="scanqrcodeForm">
+                <button>Validate and Save Coupon</button>
             </form>
+          </div>
+ 
+          
         </div>
       </div> 
 
       { qrcode ? <QrReader onData={handalqrisvailable} onSuccess={getData} /> : "" }
-
 
       <ToastContainer position="top-center"
 autoClose={5000}

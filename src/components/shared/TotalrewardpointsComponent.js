@@ -23,15 +23,5 @@ export default function TotalrewardpointsComponent() {
             });
         }, [userID]);
 
-        return (
-        <>         
-          <div className="dashboard_mid">
-              <h2>
-                  REWARD KERAKOLL AWARDS
-                  <span>you’ve earned your reward points is</span>
-              </h2>
-              <p><span>{points}</span><b>pt</b></p>
-          </div>
-        </>
-        )
+        return points;
   }
